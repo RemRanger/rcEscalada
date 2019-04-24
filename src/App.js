@@ -13,7 +13,7 @@ function RouteConfigExample()
             <div style={{ textAlign: 'center' }} >
                 <ul class='topnav'>
                     <li>
-                        <img src="favicon.ico" style={{ verticalAlign: 'middle', height: '32px' }} />
+                        <img src="favicon.ico" alt="Icon" style={{ verticalAlign: 'middle', height: '32px' }} />
                         <span style={{ color: 'skyblue', fontWeight: '800' }}>&nbsp;&nbsp;&Xi;SC&Lambda;L&Lambda;D&Lambda;&nbsp;</span>
                     </li>
                     <li><NavLink to="/home">Home</NavLink></li>
@@ -24,13 +24,13 @@ function RouteConfigExample()
                 </ul>
 
 
-                <Route path="/" exact component={Home} />
                 <Route path="/home" component={Home} />
                 <Route path="/locations" component={Locations} />
                 <Route path="/climbers" component={Climbers} />
                 <Route path="/about" component={About} />
                 <Route path="/login" component={Login} />
-            </div>
+                <Route path="/" component={Home} />
+         </div>
         </Router>
     );
 }
