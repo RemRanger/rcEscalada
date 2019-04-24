@@ -24,12 +24,12 @@ function RouteConfigExample()
                 </ul>
 
 
+                <Route exact path="/" component={Home} />
                 <Route path="/home" component={Home} />
                 <Route path="/locations" component={Locations} />
                 <Route path="/climbers" component={Climbers} />
                 <Route path="/about" component={About} />
                 <Route path="/login" component={Login} />
-                <Route path="/" component={Home} />
          </div>
         </Router>
     );
