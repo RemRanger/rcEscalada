@@ -5,6 +5,8 @@
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router-config": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0"
   },
   "scripts": {
@@ -28,5 +30,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage" : "http://www.remranger.com/rc-escalada"
+  "homepage": "http://www.remranger.com/rc-escalada"
 }

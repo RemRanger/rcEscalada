@@ -1,26 +1,38 @@
-﻿import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+﻿import React from "react";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Home from "./Home";
+import Locations from "./Locations";
+import Climbers from "./Climbers";
+import About from "./About";
+import Login from "./Login";
 
-function App()
+function RouteConfigExample()
 {
     return (
-        <div class="card" style={{ textAlign: 'center' }}>
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="text-center"><h1 style={{ color: 'darkred' }}>&Xi;SC&Lambda;L&Lambda;D&Lambda;&nbsp;&nbsp;&nbsp;</h1></div>
-                    <div class="text-center" style={{ fontStyle: 'italic' }}>A climber's log</div>
-                    <div class="text-center"><br />Developed on React</div>
-                    <div class="text-center">
-                        <img src={require('./logo.svg')} class="img-responsive center-block" style={{ maxHeight: '100px', paddingTop: '10px', paddingBottom: '10px' }} />
-                        <div class="text-center">by</div>
-                        <div class="text-center"><h3>RΞM</h3></div>
-                        <div class="text-center"><a href="http://www.remranger.com">www.remranger.com</a></div>
-                    </div>
-                </div>
+        <Router>
+            <div style={{ textAlign: 'center' }} >
+                <ul class='topnav'>
+                    <li>
+                        <img src="favicon.ico" style={{ verticalAlign: 'middle', height: '32px' }} />
+                        <span style={{ color: 'skyblue', fontWeight: '800' }}>&nbsp;&nbsp;&Xi;SC&Lambda;L&Lambda;D&Lambda;&nbsp;</span>
+                    </li>
+                    <li><NavLink to="/home">Home</NavLink></li>
+                    <li><NavLink to="/locations">Locations</NavLink></li>
+                    <li><NavLink to="/climbers">Climbers</NavLink></li>
+                    <li><NavLink to="/about">About</NavLink></li>
+                    <li><NavLink to="/login">Login</NavLink></li>
+                </ul>
+
+
+                <Route path="/" exact component={Home} />
+                <Route path="/home" component={Home} />
+                <Route path="/locations" component={Locations} />
+                <Route path="/climbers" component={Climbers} />
+                <Route path="/about" component={About} />
+                <Route path="/login" component={Login} />
             </div>
-        </div >
+        </Router>
     );
 }
 
-export default App;
+export default RouteConfigExample;
