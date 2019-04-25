@@ -100,7 +100,7 @@ li a, .dropbtn
 
 div a:hover, .dropdown-content:hover
 {
-    color: red;
+    color: dodgerblue;
 }
 
 li.dropdown
@@ -180,14 +180,9 @@ input[type="button"]
 
 a
 {
-    color: maroon;
+    color: steelblue;
     text-decoration: none;
 }
-
-    a:hover
-    {
-        color: red;
-    }
 
 #login-form td
 {
