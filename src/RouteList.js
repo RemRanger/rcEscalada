@@ -36,7 +36,7 @@ class RouteList extends Component
 							    <th colSpan="2">Route</th>
                                 <th>Rating</th>
                                 <th align="left">Location</th>
-                                <th><img src={require('./assets/result-finish.png')} /></th>
+                                <th><img src={require('./assets/result-finish.png')} alt="" /></th>
 						    </tr>
 					    </thead>
 					    <tbody>
@@ -47,11 +47,11 @@ class RouteList extends Component
                                     <td>{r.rating}</td>
                                     <td>{r.sublocation}</td>
                                     {
-                                        r.result == 0 && r.percentage != 0
+                                        r.result === 0 && r.percentage !== 0
                                         ?
                                           <td style={{color: 'red'}}>{r.percentage || 0}%</td>
                                         :
-                                          <td align="center">{getResultPic(r.result) != null ? <img src={require('./assets/' + getResultPic(r.result))} /> : ""}</td>
+                                          <td align="center">{getResultPic(r.result) != null ? <img src={require('./assets/' + getResultPic(r.result))} alt=""/> : ""}</td>
                                     }
 	    					    </tr>)}
 					    </tbody>

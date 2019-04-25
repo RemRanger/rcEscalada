@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserActivityr as Activityr, Link } from "react-router-dom";
 import { getResultPic } from "./Utils";
 import { getApiUrl } from "./Utils";
 
@@ -56,7 +55,7 @@ class ActivityList extends Component
         let attemptGroup: AttemptGroup;
         for (let attempt of this.state.attempts.sort((a, b) => { return b.sessionId - a.sessionId }))
         {
-            if (attemptGroup == null  || lastSessionId == null || attempt.sessionId != lastSessionId)
+            if (attemptGroup == null  || lastSessionId == null || attempt.sessionId !== lastSessionId)
             {
                 attemptGroup = new AttemptGroup()
                 attemptGroup.sessionId = attempt.sessionId;
@@ -98,7 +97,7 @@ class ActivityList extends Component
                                         <th align="left">Type</th>
                                         <th align="left">Rating</th>
                                         <th align="left">Location</th>
-                                        <th><img src={require('./assets/result-finish.png')} /></th>
+                                        <th><img src={require('./assets/result-finish.png')} alt=""/></th>
 						            </tr>
 						            {g.attempts.map(a =>
 							            <tr key={a.id}>
@@ -108,11 +107,11 @@ class ActivityList extends Component
                                             <td width="60" nowrap>{a.routeRating}</td>
                                             <td width="200" >{a.routeSublocation}</td>
                                             { 
-                                                a.result == 0 &&a.percentage != 0
+                                                a.result === 0 &&a.percentage !== 0
                                                 ?
                                                   <td width="40" nowrap style={{color: 'red'}}>{a.percentage || 0}%</td>
                                                 :
-                                                  <td width="40" nowrap align="center">{getResultPic(a.result) != null ? <img src={require('./assets/' + getResultPic(a.result))} /> : ""}</td>
+                                                  <td width="40" nowrap align="center">{getResultPic(a.result) != null ? <img src={require('./assets/' + getResultPic(a.result))} alt=""/> : ""}</td>
                                             }
 	    					            </tr>)}
 				                    </table>

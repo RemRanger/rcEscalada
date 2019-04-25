@@ -39,7 +39,7 @@ class UserList extends Component
                                 <tbody>
                                     {this.state.users.map(u =>
                                         <tr key={u.id}>
-                                          <td width="16" style={{backgroundColor: u.gender == 'F' ? 'violet' : 'blue'}}></td>
+                                          <td width="16" style={{backgroundColor: u.gender === 'F' ? 'violet' : 'blue'}}></td>
                                           <td>{u.firstName} {u.lastName}</td>
                                         </tr>)}
                                 </tbody>
