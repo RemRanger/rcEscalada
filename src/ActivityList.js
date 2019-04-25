@@ -39,11 +39,16 @@ class ActivityList extends Component
 	getActivitysAsync = async () =>
 	{
 		let response = await fetch(this.state.urlApiRead);
-		let data = await response.json();
-        //console.log("Getting attempts data:", data);
-
-	    this.setState({ attempts: data});
-        this.state.hasLoaded = true;
+        let data = null;
+		try
+        {
+		    data = await response.json();
+            //console.log("Getting attempts data:", data);
+        }
+        finally
+        {
+            this.setState({ attempts: data, hasLoaded: true});
+        }
 
 		return data;
 	}

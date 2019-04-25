@@ -10,12 +10,16 @@ class RouteList extends Component
 	getRoutesAsync = async () =>
 	{
 		let response = await fetch(this.state.urlApiRead);
-		let data = await response.json();
-        //console.log("Getting routes data:", data);
-
-	    this.setState({ routes: data});
-        this.state.hasLoaded = true;
-
+        let data = null;
+		try
+        {
+            data = await response.json();
+            //console.log("Getting routes data:", data);
+        }
+        finally
+        {
+            this.setState({ routes: data, hasLoaded: true});
+        }
 		return data;
 	}
 
