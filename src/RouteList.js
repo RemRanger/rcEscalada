@@ -5,28 +5,29 @@ import { getApiUrl } from "./Utils";
 
 class RouteList extends Component
 {
-	state = { routes: null, urlApiRead: `${getApiUrl('route', "read")}?locationId=${this.props.locationId}` }
+	state = { routes: null, hasLoaded: false, urlApiRead: `${getApiUrl('route', "read")}?locationId=${this.props.locationId}` }
 
 	getRoutesAsync = async () =>
 	{
 		let response = await fetch(this.state.urlApiRead);
 		let data = await response.json();
-        console.log("Getting routes data:", data);
+        //console.log("Getting routes data:", data);
 
-		this.setState({ routes: data });
+	    this.setState({ routes: data});
+        this.state.hasLoaded = true;
 
 		return data;
 	}
 
 	render()
 	{
-		if (this.state.routes == null)
+		if (this.state.routes == null && !this.state.hasLoaded)
 			this.getRoutesAsync();
 
 		return (
 			<div align="center">
 		    {
-			    this.state.routes
+			    this.state.routes != null
 			    ?
 			    (
 				    <table className="grid">
@@ -43,7 +44,7 @@ class RouteList extends Component
 							    <tr key={r.id}>
                                     <td width="16" style={{backgroundColor: r.color}}></td>
 								    <td>{r.name}</td>
-                                    <td>{r.routeUntil}</td>
+                                    <td>{r.rating}</td>
                                     <td>{r.sublocation}</td>
                                     {
                                         r.result == 0 && r.percentage != 0
@@ -57,7 +58,7 @@ class RouteList extends Component
 				    </table>
 				    )
 				    :
-				    ('Loading... please wait')
+				    this.state.hasLoaded ? ('No results.') : ('Loading... please wait')
 			}
             <p><a href={this.state.urlApiRead}>API</a></p>
 			</div >
