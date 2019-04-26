@@ -27,7 +27,7 @@ function App()
 
             <Route exact path="/" component={Home} />
             <Route path="/home" component={Home} />
-            <Route path="/locations" component={LocationList} />
+            <Route exact path="/locations" component={LocationList} />
             <Route path="/locations/:locationId" component={LocationDetail} />
             <Route path="/climbers" component={UserList} />
             <Route path="/about" component={About} />

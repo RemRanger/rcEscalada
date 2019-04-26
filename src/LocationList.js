@@ -41,7 +41,7 @@ class LocationList extends Component
                                     {this.state.locations.map(l =>
                                         <tr key={l.id}>
                                             <td>{l.name}</td>
-                                            <td><Link to={`/locations/${l.id}`}>&nbsp;Topo&nbsp;</Link></td>
+                                            <td><Link to={`locations/${l.id}`}>&nbsp;Topo&nbsp;</Link></td>
                                             <td><a href={`http://${l.websiteUrl}`}>{l.websiteUrl}</a></td>
                                         </tr>)}
                                 </tbody>
