@@ -7,7 +7,7 @@ class LocationDetail extends Component
 
     getLocationAsync = async () =>
     {
-        let response = await fetch(`https://www.remranger.com/escalada-api/location-read.php?id=${this.props.match.params.locationId}`);
+        let response = await fetch(`https://www.remranger.com/escalada-api/location-read.php?id=${this.props.match.params.id}`);
         let data = await response.json();
         console.log("Getting locations data:", data);
 
@@ -30,7 +30,7 @@ class LocationDetail extends Component
                         (
                             <div>
                                 <p>{this.state.location.name}</p>
-                                <RouteList locationId={this.props.match.params.locationId} />
+                                <RouteList locationId={this.props.match.params.id} />
                             </div>
                         )
                         :

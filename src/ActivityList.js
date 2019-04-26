@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getResultPic } from "./Utils";
 import { getApiUrl } from "./Utils";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class Attempt
 {
@@ -90,11 +91,11 @@ class ActivityList extends Component
                              <tr>
                                 <td>
                                   <table class="grid" width="100%">
-                                    <tr style={{backgroundColor:'rgba(0, 0, 0, 0.2)'}}>
-                                      <td colspan="100">{g.attempts[0].sessionDate}, {g.attempts[0].locationName}</td>
+                                        <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+                                        <td colspan="100">{new Date(g.attempts[0].sessionDate).toDateString()}, {g.attempts[0].locationName}</td>
                                     </tr>
-                                    <tr style={{backgroundColor:'rgba(0, 0, 0, 0.1)'}}>
-                                      <td colspan="100">Climber:&nbsp;{g.attempts[0].userFirstName} {g.attempts[0].userLastName}</td>
+                                        <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+                                            <td colspan="100"><Link to={`/sessions/${g.sessionId}/${g.userId}`}>Climber:&nbsp;{g.attempts[0].userFirstName} {g.attempts[0].userLastName}</Link></td>
                                     </tr>
 
 						            <tr>

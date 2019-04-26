@@ -6,6 +6,7 @@ import LocationDetail from "./LocationDetail";
 import UserList from "./UserList";
 import About from "./About";
 import Login from "./Login";
+import SessionDetail from "./SessionDetail";
 
 function App()
 {
@@ -28,10 +29,12 @@ function App()
             <Route exact path="/" component={Home} />
             <Route path="/home" component={Home} />
             <Route exact path="/locations" component={LocationList} />
-            <Route path="/locations/:locationId" component={LocationDetail} />
+            <Route path="/locations/:id" component={LocationDetail} />
             <Route path="/climbers" component={UserList} />
             <Route path="/about" component={About} />
             <Route path="/login" component={Login} />
+            {/*<Route exact path="/sessions" component={SessionList} />*/}
+            <Route path="/sessions/:id/:userId" component={SessionDetail} />
         </Router>
     );
 }
