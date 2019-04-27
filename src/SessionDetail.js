@@ -9,7 +9,7 @@ class SessionDetail extends Component
             session: null,
             hasLoaded: false,
             urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
-            urlApiReadUser: `${getApiUrl('user', "read")}?id=${this.props.match.params.userId}`
+            urlApiReadUser: `${getApiUrl('user', "read")}`
         }
 
     getSessionAsync = async () =>
@@ -18,7 +18,7 @@ class SessionDetail extends Component
         let data = await response.json();
         console.log("Getting session data:", data);
 
-        this.setState({ session: data[0] });
+        this.setState({ session: data[0], hasLoaded: true });
 
         return data;
     }
@@ -29,17 +29,20 @@ class SessionDetail extends Component
         let data = await response.json();
         console.log("Getting user data:", data);
 
-        this.setState({ user: data[0] });
+        this.setState({ user: data.filter(d => d.id == this.props.match.params.userId)[0], hasLoaded: true });
 
         return data;
     }
 
     render()
     {
-        if (this.state.session == null)
-            this.getSessionAsync();
-        if (this.state.user == null)
-            this.getUserAsync();
+        //if (!this.state.hasLoaded)
+        {
+            if (this.state.session == null)
+                this.getSessionAsync();
+            if (this.state.user == null)
+                this.getUserAsync();
+        }
 
         return (
             <div align="center">
@@ -72,7 +75,7 @@ class SessionDetail extends Component
                             </div>
                         )
                         :
-                        ('Loading... please wait')
+                        this.state.hasLoaded ? ('No results.') : ('Loading... please wait')
                 }
             </div >
         );
