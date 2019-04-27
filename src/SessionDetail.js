@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import AttemptList from "./AttemptList";
+import { getApiUrl } from "./Utils";
 
 class SessionDetail extends Component
 {
-    state = { session: null }
+    state =
+        {
+            session: null,
+            hasLoaded: false,
+            urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
+            urlApiReadUser: `${getApiUrl('user', "read")}?id=${this.props.match.params.userId}`
+        }
 
     getSessionAsync = async () =>
     {
-        let response = await fetch(`https://www.remranger.com/escalada-api/session-read.php?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`);
+        let response = await fetch(this.state.urlApiRead);
         let data = await response.json();
         console.log("Getting session data:", data);
 
@@ -18,7 +25,7 @@ class SessionDetail extends Component
 
     getUserAsync = async () =>
     {
-        let response = await fetch(`https://www.remranger.com/escalada-api/user-read.php?id=${this.props.match.params.userId}`);
+        let response = await fetch(this.state.urlApiReadUser);
         let data = await response.json();
         console.log("Getting user data:", data);
 

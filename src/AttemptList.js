@@ -4,7 +4,7 @@ import { getApiUrl } from "./Utils";
 
 class AttemptList extends Component
 {
-    state = { attempts: null, hasLoaded: false, urlApiRead: `${getApiUrl('attempt', "read")}?sessionId=${this.props.sessionId}&?userId=${this.props.userId}` }
+    state = { attempts: null, hasLoaded: false, urlApiRead: `${getApiUrl('attempt', "read")}?sessionId=${this.props.sessionId}&userId=${this.props.userId}` }
 
     getAttemptsAsync = async () =>
     {
