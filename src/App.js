@@ -1,5 +1,5 @@
 ﻿import React from "react";
-import { HashRouter, Route, NavLink } from "react-router-dom";
+import { HashRouter, Route, Redirect, NavLink } from "react-router-dom";
 import Home from "./Home";
 import LocationList from "./LocationList";
 import LocationDetail from "./LocationDetail";
@@ -11,7 +11,7 @@ import SessionDetail from "./SessionDetail";
 function App()
 {
     return (
-        <HashRouter>
+        <HashRouter basename='/'>
             <div>
                 <div style={{ textAlign: 'center' }} >
                     <ul className='topnav'>
@@ -27,7 +27,7 @@ function App()
                     </ul>
                 </div>
 
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" render={() => (<Redirect to="/home" />)}/>
                 <Route path="/home" component={Home} />
                 <Route exact path="/locations" component={LocationList} />
                 <Route path="/locations/:id" component={LocationDetail} />
