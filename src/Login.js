@@ -73,37 +73,34 @@ class Login extends Component
 
     render()
     {
-        if (this.state.user == null)
+        if (this.state.user == null || this.state.user.id < 0)
         {
             return (
                 <div style={{ textAlign: 'center' }}>
                     <h1>Login</h1>
-                    {this.state.user ? <p>Logged in as {this.state.user.firstName}</p>
-                        :
-                        (
-                            <form onSubmit={this.handleSubmit} noValidate>
-                                <table align="center">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <input type="text" placeholder="Your user name" name="userName" value={this.state.userName} required
-                                                    onChange={this.handleChange} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="password" placeholder="Your Password" name="password" value={this.state.password} required
-                                                    onChange={this.handleChange} />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                {!this.isValid() && this.isTouched() ? <div style={{ color: 'red' }}>Please provide a user name and password..</div> : ''}
-                                <br />
-                                <button disabled={!this.isValid()} type="submit" value="Submit">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <form onSubmit={this.handleSubmit} noValidate>
+                        <table align="center">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" placeholder="Your user name" name="userName" value={this.state.userName} required
+                                            onChange={this.handleChange} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="password" placeholder="Your Password" name="password" value={this.state.password} required
+                                            onChange={this.handleChange} />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {!this.isValid() && this.isTouched() ? <div style={{ color: 'red' }}>Please provide a user name and password..</div> : ''}
+                        {this.state.user != null && this.state.user.id < 0 ? <div style={{ color: 'red' }}>User name or password are incorrect.</div> : ""}
+                        <br />
+                        <button disabled={!this.isValid()} type="submit" value="Submit">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 {/*<a>Register</a>*/}
-                            </form >
-                        )}
+                    </form >
                 </div >
             );
         }
