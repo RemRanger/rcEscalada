@@ -53,7 +53,7 @@ class App extends Component
                                             <li className="dropdown">
                                                 <a className="dropbtn" style={{ color: 'steelblue' }}>{this.state.user.firstName}</a>
                                                 <div className="dropdown-content">
-                                                    <NavLink to="/sessions">My sessions</NavLink>
+                                                    <NavLink to={`/sessions/${this.state.user.id}`}>My sessions</NavLink>
                                                     <a href="#" onClick={this.logout}>Logout</a>
                                                 </div>
                                             </li>
