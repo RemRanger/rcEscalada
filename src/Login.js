@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getApiUrl } from "./Utils";
-import App from "./App";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component
 {
@@ -73,37 +73,44 @@ class Login extends Component
 
     render()
     {
-        return (
-            <div style={{ textAlign: 'center' }}>
-                <h1>Login</h1>
-                {this.state.user ? <p>Logged in as {this.state.user.firstName}</p>
-                :
-                (
-                <form onSubmit={this.handleSubmit} noValidate>
-                    <table align="center">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input type="text" placeholder="Your user name" name="userName" value={this.state.userName} required
-                                        onChange={this.handleChange} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="password" placeholder="Your Password" name="password" value={this.state.password} required
-                                        onChange={this.handleChange} />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    {!this.isValid() && this.isTouched() ? <div style={{ color: 'red' }}>Please provide a user name and password..</div> : ''}
-                    <br />
-                    <button disabled={!this.isValid()} type="submit" value="Submit">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {/*<a>Register</a>*/}
-                </form >
-                )}
-            </div >
-        );
+        if (this.state.user == null)
+        {
+            return (
+                <div style={{ textAlign: 'center' }}>
+                    <h1>Login</h1>
+                    {this.state.user ? <p>Logged in as {this.state.user.firstName}</p>
+                        :
+                        (
+                            <form onSubmit={this.handleSubmit} noValidate>
+                                <table align="center">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="text" placeholder="Your user name" name="userName" value={this.state.userName} required
+                                                    onChange={this.handleChange} />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="password" placeholder="Your Password" name="password" value={this.state.password} required
+                                                    onChange={this.handleChange} />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {!this.isValid() && this.isTouched() ? <div style={{ color: 'red' }}>Please provide a user name and password..</div> : ''}
+                                <br />
+                                <button disabled={!this.isValid()} type="submit" value="Submit">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {/*<a>Register</a>*/}
+                            </form >
+                        )}
+                </div >
+            );
+        }
+        else
+            return (
+                <Redirect to="/Home" />
+            );
     }
 }
 

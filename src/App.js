@@ -23,6 +23,11 @@ class App extends Component
         console.log("App user:", newUser);
     }
 
+    logout = () =>
+    {
+        this.setState({ user: null });
+    }
+
     render()
     {
         return (
@@ -45,10 +50,10 @@ class App extends Component
                                     (
                                         <>
                                             <li class="dropdown">
-                                                <a class="dropbtn" style={{ color: 'red' }}>{this.state.user.firstName}</a>
+                                                <a class="dropbtn" style={{ color: 'steelblue' }}>{this.state.user.firstName}</a>
                                                 <div class="dropdown-content">
                                                     <NavLink to="/sessions">My sessions</NavLink>
-                                                    <a href="#">Logout</a>
+                                                    <a href="#" onClick={this.logout}>Logout</a>
                                                 </div>
                                             </li>
                                         </>
