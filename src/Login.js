@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getApiUrl } from "./Utils";
+import App from "./App";
 
 class Login extends Component
 {
@@ -64,7 +65,8 @@ class Login extends Component
         finally
         {
             this.setState({ user: data });
-            console.log("User:", this.state.user);
+            console.log("Login user:", this.state.user);
+            this.props.onLoggedIn(data);
         }
         return data;
     }

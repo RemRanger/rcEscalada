@@ -1,4 +1,4 @@
-﻿import React from "react";
+﻿import React, { Component } from "react";
 import { HashRouter, Route, Redirect, NavLink } from "react-router-dom";
 import Home from "./Home";
 import LocationList from "./LocationList";
@@ -8,37 +8,67 @@ import About from "./About";
 import Login from "./Login";
 import SessionDetail from "./SessionDetail";
 
-function App()
+class App extends Component
 {
-    return (
-        <HashRouter basename='/'>
-            <div>
-                <div style={{ textAlign: 'center' }} >
-                    <ul className='topnav'>
-                        <li>
-                            <img src="favicon.ico" alt="Icon" style={{ verticalAlign: 'middle', height: '32px' }} />
-                            <span style={{ color: 'skyblue', fontWeight: '800' }}>&nbsp;&nbsp;&Xi;SC&Lambda;L&Lambda;D&Lambda;&nbsp;</span>
-                        </li>
-                        <li><NavLink to="/home">Home</NavLink></li>
-                        <li><NavLink to="/locations">Locations</NavLink></li>
-                        <li><NavLink to="/climbers">Climbers</NavLink></li>
-                        <li><NavLink to="/about">About</NavLink></li>
-                        <li><NavLink to="/login">Login</NavLink></li>
-                    </ul>
-                </div>
+    constructor(props)
+    {
+        super(props);
 
-                <Route exact path="/" render={() => (<Redirect to="/home" />)}/>
-                <Route path="/home" component={Home} />
-                <Route exact path="/locations" component={LocationList} />
-                <Route path="/locations/:id" component={LocationDetail} />
-                <Route path="/climbers" component={UserList} />
-                <Route path="/about" component={About} />
-                <Route path="/login" component={Login} />
-                {/*<Route exact path="/sessions" component={SessionList} />*/}
-                <Route path="/sessions/:id/:userId" component={SessionDetail} />
-            </div>
-        </HashRouter>
-    );
+        this.state = { user: null }
+    }
+
+    handleLoggedIn = (newUser) =>
+    {
+        this.setState({ user: newUser });
+        console.log("App user:", newUser);
+    }
+
+    render()
+    {
+        return (
+            <HashRouter basename='/'>
+                <div>
+                    <div style={{ textAlign: 'center' }} >
+                        <ul className='topnav'>
+                            <li>
+                                <img src="favicon.ico" alt="Icon" style={{ verticalAlign: 'middle', height: '32px' }} />
+                                <span style={{ color: 'skyblue', fontWeight: '800' }}>&nbsp;&nbsp;&Xi;SC&Lambda;L&Lambda;D&Lambda;&nbsp;</span>
+                            </li>
+                            <li><NavLink to="/home">Home</NavLink></li>
+                            <li><NavLink to="/locations">Locations</NavLink></li>
+                            <li><NavLink to="/climbers">Climbers</NavLink></li>
+                            <li><NavLink to="/about">About</NavLink></li>
+                            {
+                                this.state.user == null ?
+                                    (<li><NavLink to="/login">Login</NavLink></li>)
+                                    :
+                                    (
+                                        <>
+                                            <li class="dropdown">
+                                                <a class="dropbtn" style={{ color: 'red' }}>{this.state.user.firstName}</a>
+                                                <div class="dropdown-content">
+                                                    <NavLink to="/sessions">My sessions</NavLink>
+                                                    <a href="#">Logout</a>
+                                                </div>
+                                            </li>
+                                        </>
+                                    )}
+                        </ul>
+                    </div>
+
+                    <Route exact path="/" render={() => (<Redirect to="/home" />)} />
+                    <Route path="/home" component={Home} />
+                    <Route exact path="/locations" component={LocationList} />
+                    <Route path="/locations/:id" component={LocationDetail} />
+                    <Route path="/climbers" component={UserList} />
+                    <Route path="/about" component={About} />
+                    <Route path="/login" render={(props) => <Login onLoggedIn={this.handleLoggedIn} />} />
+                    {/*<Route exact path="/sessions" component={SessionList} />*/}
+                    <Route path="/sessions/:id/:userId" component={SessionDetail} />
+                </div>
+            </HashRouter>
+        );
+    }
 }
 
 export default App;
