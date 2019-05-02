@@ -54,19 +54,19 @@ class SessionDetail extends Component
                             <div>
                                 {this.state.session.comment}
                                 < br /> <br />
-                                <table class="noborder">
+                                <table >
                                     <tbody>
-                                        <tr class="noalt">
-                                            <td class="noborder">Climber:</td>
-                                            <td class="noborder">{this.state.user.firstName} {this.state.user.lastName}</td>
+                                        <tr >
+                                            <td >Climber:</td>
+                                            <td >{this.state.user.firstName} {this.state.user.lastName}</td>
                                         </tr>
-                                        <tr class="noalt">
-                                            <td class="noborder">With:</td>
-                                            <td class="noborder">{this.state.session.partnerNames}</td>
+                                        <tr >
+                                            <td >With:</td>
+                                            <td >{this.state.session.partnerNames}</td>
                                         </tr>
-                                        <tr class="noalt">
-                                            <td class="noborder">At:</td>
-                                            <td class="noborder">{this.state.session.locationName}</td>
+                                        <tr >
+                                            <td >At:</td>
+                                            <td >{this.state.session.locationName}</td>
                                         </tr>
                                     </tbody>
                                 </table>

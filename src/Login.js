@@ -109,7 +109,7 @@ class Login extends Component
         }
         else
             return (
-                <Redirect to="/Home" />
+                <Redirect to={`/sessions/${this.state.user.id}`} />
             );
     }
 }

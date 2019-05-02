@@ -6,6 +6,7 @@ import LocationDetail from "./LocationDetail";
 import UserList from "./UserList";
 import About from "./About";
 import Login from "./Login";
+import SessionList from "./SessionList";
 import SessionDetail from "./SessionDetail";
 
 class App extends Component
@@ -49,9 +50,9 @@ class App extends Component
                                     :
                                     (
                                         <>
-                                            <li class="dropdown">
-                                                <a class="dropbtn" style={{ color: 'steelblue' }}>{this.state.user.firstName}</a>
-                                                <div class="dropdown-content">
+                                            <li className="dropdown">
+                                                <a className="dropbtn" style={{ color: 'steelblue' }}>{this.state.user.firstName}</a>
+                                                <div className="dropdown-content">
                                                     <NavLink to="/sessions">My sessions</NavLink>
                                                     <a href="#" onClick={this.logout}>Logout</a>
                                                 </div>
@@ -68,7 +69,7 @@ class App extends Component
                     <Route path="/climbers" component={UserList} />
                     <Route path="/about" component={About} />
                     <Route path="/login" render={(props) => <Login onLoggedIn={this.handleLoggedIn} />} />
-                    {/*<Route exact path="/sessions" component={SessionList} />*/}
+                    <Route exact path="/sessions/:userId" component={SessionList} />
                     <Route path="/sessions/:id/:userId" component={SessionDetail} />
                 </div>
             </HashRouter>
