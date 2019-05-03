@@ -52,10 +52,8 @@ class SessionList extends Component
                                             <td style={{ whiteSpace: 'nowrap' }}>{s.locationName}</td>
                                             <td>{s.partnerNames}</td>
                                             <td>{s.comment}</td>
-                                            {/*
-                                             * <td><Link to={`/session-edit/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/edit.png')} /></Link></td>
+                                            <td><Link to={`/session-edit/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/edit.png')} /></Link></td>
                                             <td><Link to={`/session-delete/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/delete.png')} /></Link></td>
-                                            */}
                                         </tr >)}
                                 </tbody >
                             </table >

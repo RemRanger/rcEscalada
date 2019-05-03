@@ -8,6 +8,7 @@ import About from "./About";
 import Login from "./Login";
 import SessionList from "./SessionList";
 import SessionDetail from "./SessionDetail";
+import SessionEdit from "./SessionEdit";
 
 class App extends Component
 {
@@ -67,6 +68,7 @@ class App extends Component
                     <Route path="/login" render={(props) => <Login onLoggedIn={this.handleLoggedIn} />} />
                     <Route exact path="/sessions/:userId" component={SessionList} />
                     <Route path="/sessions/:id/:userId" component={SessionDetail} />
+                    <Route path="/session-edit/:id/:userId" component={SessionEdit} />
                 </div>
             </HashRouter>
         );

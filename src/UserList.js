@@ -6,7 +6,7 @@ class UserList extends Component
 {
     state = { users: null, urlApiRead: getApiUrl('user', "read") }
 
-    getClimbersAsync = async () =>
+    getUsersAsync = async () =>
     {
         let response = await fetch(this.state.urlApiRead);
         let data = await response.json();
@@ -20,7 +20,7 @@ class UserList extends Component
     render()
     {
         if (this.state.users == null)
-            this.getClimbersAsync();
+            this.getUsersAsync();
 
         console.log("Rendering, this.state.climbers:", this.state.users);
         return (

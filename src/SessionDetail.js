@@ -29,7 +29,7 @@ class SessionDetail extends Component
         let data = await response.json();
         console.log("Getting user data:", data);
 
-        this.setState({ user: data.filter(d => d.id == this.props.match.params.userId)[0], hasLoaded: true });
+        this.setState({ user: data.filter(d => d.id === this.props.match.params.userId)[0], hasLoaded: true });
 
         return data;
     }
@@ -37,12 +37,12 @@ class SessionDetail extends Component
     render()
     {
         //if (!this.state.hasLoaded)
-        {
+        //{
             if (this.state.session == null)
                 this.getSessionAsync();
             if (this.state.user == null)
                 this.getUserAsync();
-        }
+        //}
 
         return (
             <div align="center">
