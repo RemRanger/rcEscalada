@@ -66,14 +66,14 @@ class DatePicker extends Component
     {
         return (
             <div>
-                <select name="selectedYear" required onChange={this.handleChange}>
-                    {this.getYears().map(y => <option value={y} selected={y == this.state.selectedYear}>{y}</option>)}
+                <select name="selectedYear" required value={this.state.selectedYear} onChange={this.handleChange}>
+                    {this.getYears().map(y => <option key={y} value={y} >{y}</option>)}
                 </select >
-                <select name="selectedMonth" required onChange={this.handleChange}>
-                    {this.getMonths().map(m => <option value={m} selected={m == this.state.selectedMonth}>{this.getMonthName(m)}</option>)}
+                <select name="selectedMonth" required value={this.state.selectedMonth}  onChange={this.handleChange}>
+                    {this.getMonths().map(m => <option key={m} value={m}>{this.getMonthName(m)}</option>)}
                 </select >
-                <select name="selectedDay" onChange={this.handleChange}>
-                    {this.getDays().map(d => <option value={d} selected={d == this.state.selectedDay} >{d}</option>)}
+                <select name="selectedDay" value={this.state.selectedDay} onChange={this.handleChange}>
+                    {this.getDays().map(d => <option key={d} value={d}>{d}</option>)}
                 </select >
             </div >
         )

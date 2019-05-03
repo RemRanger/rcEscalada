@@ -20,7 +20,8 @@ class SessionEdit extends Component
             }
 
         this.handleDateChange = this.handleDateChange.bind(this);
- }
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
     getSessionAsync = async () =>
     {
@@ -66,6 +67,13 @@ class SessionEdit extends Component
         console.log("Date set: ", newDate);
     }
 
+    handleSubmit(event)
+    {
+        event.preventDefault();
+
+        //Todo
+    }
+
     render()
     {
         if (this.state.session == null && !this.state.hasLoadedSession)
@@ -80,43 +88,45 @@ class SessionEdit extends Component
                 <h1>Edit session</h1>
                 {this.state.locations != null && this.state.users != null
                     ?
-                    (<form method="post" novalidate onSubmit="submit()">
+                    (<form method="post" novalidate onSubmit={this.handleSubmit}>
                         <table>
-                            <tr>
-                                <td align="center">
-                                    <DatePicker date={this.state.session ? this.state.session.date : new Date()} onChange={this.handleDateChange} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <select name="locationId" required>
-                                        <option disabled selected value="undefined">--Please select a location--</option>
-                                        {this.state.locations.map(l =>
-                                            <option value={l.id} selected={this.state.session != null && this.state.session.locationId == l.id} >{l.name}</option>)
-                                        }
-                                    </select >
-                                </td >
-                            </tr >
-                            {/*<tr ><td align="center" style={{ color: 'red', fontSizeAdjust: 0.4 }}>Please select a location.</td></tr >*/}
-                            <tr>
-                                <td align="center">
-                                    <select name="partnerIds[]" multiple size='30'>
-                                        <option disabled>--Were you with others? If so, please select--</option>
-                                        {this.state.users.map(u =>
-                                            <option value={u.id} selected={this.state.session != null && this.state.session.partnerIds.includes(u.id.toString())}>{u.firstName} {u.lastName}</option>)
-                                        }
-                                    </select>
-                                </td >
-                            </tr >
-                            <tr>
-                                <td>
-                                    <textarea rows="4" cols="50" name="comment" form="sessionform">{this.state.session ? this.state.session.comment : ""}</textarea>
-                                </td>
-                            </tr >
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <DatePicker date={this.state.session ? this.state.session.date : new Date()} onChange={this.handleDateChange} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <select name="locationId" requiredvalue={this.state.session ? this.state.session.locationId : 0}>
+                                            <option disabled>--Please select a location--</option>
+                                            {this.state.locations.map(l =>
+                                                <option key={l.id} value={l.id}>{l.name}</option>)
+                                            }
+                                        </select >
+                                    </td >
+                                </tr >
+                                {/*<tr ><td align="center" style={{ color: 'red', fontSizeAdjust: 0.4 }}>Please select a location.</td></tr >*/}
+                                <tr>
+                                    <td align="center">
+                                        <select name="partnerIds[]" multiple size='30'>
+                                            <option disabled>--Were you with others? If so, please select--</option>
+                                            {this.state.users.map(u =>
+                                                <option key={u.id} value={u.id} selected={this.state.session != null && this.state.session.partnerIds.includes(u.id.toString())}>{u.firstName} {u.lastName}</option>)
+                                            }
+                                        </select>
+                                    </td >
+                                </tr >
+                                <tr>
+                                    <td>
+                                        <textarea rows="4" cols="50" name="comment" form="sessionform" value={this.state.session ? this.state.session.comment : ""} />
+                                    </td>
+                                </tr >
+                            </tbody>
                         </table >
                         <br />
                         <button style={{ width: '100px' }} type="submit" disabled="!sessionEditForm.valid" > OK</button >&nbsp;&nbsp;
-                    <input type="button" value="Cancel" style={{ width: '100px' }} onClick="history.go(-1);" />
+                    <input type="button" value="Cancel" style={{ width: '100px' }} onClick={this.props.history.goBack} />
                     </form >)
                     :
                     ('Loading... please wait')
