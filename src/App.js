@@ -45,18 +45,14 @@ class App extends Component
                             <li><NavLink to="/climbers">Climbers</NavLink></li>
                             <li><NavLink to="/about">About</NavLink></li>
                             {
-                                this.state.user == null ?
+                                this.state.user == null
+                                    ?
                                     (<li><NavLink to="/login">Login</NavLink></li>)
                                     :
                                     (
                                         <>
-                                            <li className="dropdown">
-                                                <a className="dropbtn" style={{ color: 'skyblue' }}>{this.state.user.firstName}</a>
-                                                <div className="dropdown-content">
-                                                    <NavLink to={`/sessions/${this.state.user.id}`}>My sessions</NavLink>
-                                                    <a href="#" onClick={this.logout}>Logout</a>
-                                                </div>
-                                            </li>
+                                            <li><NavLink to={`/sessions/${this.state.user.id}`}>My sessions</NavLink></li>
+                                            <li><a href="#" onClick={this.logout}>Logout {this.state.user.firstName}</a></li>
                                         </>
                                     )}
                         </ul>
