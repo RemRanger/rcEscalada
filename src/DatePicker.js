@@ -7,6 +7,8 @@ class DatePicker extends Component
         super(props);
 
         let date = new Date(props.date);
+        if (isNaN(date.getTime()))
+            date = new Date();
         this.state =
             {
                 selectedYear: date.getFullYear(),
@@ -59,7 +61,7 @@ class DatePicker extends Component
         let selectedMonth = (name === "selectedMonth" ? value : this.state.selectedMonth);
         let selectedDay = (name === "selectedDay" ? value : this.state.selectedDay);
 
-        this.props.onChange(new Date(selectedYear, selectedMonth, selectedDay));
+        this.props.onChange(selectedYear.toString() + "-" + selectedMonth.toString() + "-" + selectedDay.toString());
     }
 
     render()
