@@ -71,7 +71,7 @@ class DatePicker extends Component
                 <select name="selectedYear" required value={this.state.selectedYear} onChange={this.handleChange}>
                     {this.getYears().map(y => <option key={y} value={y} >{y}</option>)}
                 </select >
-                <select name="selectedMonth" required value={this.state.selectedMonth}  onChange={this.handleChange}>
+                <select name="selectedMonth" required value={this.state.selectedMonth} onChange={this.handleChange}>
                     {this.getMonths().map(m => <option key={m} value={m}>{this.getMonthName(m)}</option>)}
                 </select >
                 <select name="selectedDay" value={this.state.selectedDay} onChange={this.handleChange}>

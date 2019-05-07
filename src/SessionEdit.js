@@ -18,6 +18,7 @@ class SessionEdit extends Component
                 urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
                 urlApiReadLocations: getApiUrl("location", "read"),
                 urlApiReadUsers: getApiUrl("user", "read"),
+                urlApiCreate: getApiUrl("session", "create"),
                 urlApiUpdate: getApiUrl("session", "update"),
                 submitted: false
             }
@@ -31,12 +32,24 @@ class SessionEdit extends Component
 
     getSessionAsync = async () =>
     {
-        let response = await fetch(this.state.urlApiRead);
-        let sessions = await response.json();
-        console.log("Getting session data:", sessions);
+        let session = null;
+        if (this.props.match.params.id == 0)
+            session =
+                {
+                    id: 0,
+                    date: new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
+                    partnerIds: [],
+                    comment: ""
+                };
+        else
+        {
+            let response = await fetch(this.state.urlApiRead);
+            let sessions = await response.json();
+            console.log("Getting session data:", sessions);
 
-        let session = sessions[0];
-        session.partnerIds = session.partnerIdsAsString != null ? session.partnerIdsAsString.toString().split(",").map(i => i.trim()) : "";
+            session = sessions[0];
+            session.partnerIds = session.partnerIdsAsString != null ? session.partnerIdsAsString.toString().split(",").map(i => i.trim()) : "";
+        }
 
         this.setState({ session: session, hasLoadedSession: true });
 
@@ -46,12 +59,19 @@ class SessionEdit extends Component
     getLocationsAsync = async () =>
     {
         let response = await fetch(this.state.urlApiReadLocations);
-        let data = await response.json();
-        console.log("Getting locations data:", data);
+        let locations = await response.json();
+        console.log("Getting locations data:", locations);
 
-        this.setState({ locations: data });
+        this.setState({ locations: locations });
 
-        return data;
+        if (this.state.session.id == 0 && locations != null && locations.length > 0)
+        {
+            let session = this.state.session;
+            session.locationId = locations[0].id;
+            this.setState({ session: session });
+        }
+
+        return locations;
     }
 
     getUsersAsync = async () =>
@@ -126,7 +146,7 @@ class SessionEdit extends Component
 
     isValid()
     {
-        return this.state.session != null && this.state.session.id > 0;
+        return this.state.session != null;
     }
 
     handleSubmit(event)
@@ -139,7 +159,8 @@ class SessionEdit extends Component
     submitSessionAsync = async () =>
     {
         let formData = new FormData();
-        formData.append('id', this.state.session.id);
+        if (this.state.session.id > 0)
+            formData.append('id', this.state.session.id);
         formData.append('locationId', this.state.session.locationId);
         formData.append('date', this.state.session.date);
         formData.append('comment', this.state.session.comment);
@@ -147,14 +168,33 @@ class SessionEdit extends Component
         for (let i = 0; i < this.state.session.partnerIds.length; i++)
             formData.append('partnerIds[' + i + ']', this.state.session.partnerIds[i]);
 
-        let response = await fetch(this.state.urlApiUpdate,
-            {
-                method: 'post',
-                body: formData
-            });
+
+        let response = null;
+        if (this.state.session.id == 0)
+        {
+            console.log("urlApiCreate: ", this.state.urlApiCreate);
+            console.log('locationId', this.state.session.locationId);
+            console.log('date', this.state.session.date);
+            console.log('comment', this.state.session.comment);
+            console.log('userId', this.props.match.params.userId);
+            response = await fetch(this.state.urlApiCreate,
+                {
+                    method: 'post',
+                    body: formData
+                });
+        }
+        else
+        {
+            response = await fetch(this.state.urlApiUpdate,
+                {
+                    method: 'post',
+                    body: formData
+                });
+        }
         let data = null;
         try
         {
+            console.log("Submit");
             data = await response.json();
             console.log("Getting response:", data);
             this.setState({ submitted: true });
@@ -219,7 +259,7 @@ class SessionEdit extends Component
                             </table >
                             <br />
                             <button style={{ width: '100px' }} type="submit" disabled={!this.isValid()} > OK</button >&nbsp;&nbsp;
-                    <input type="button" value="Cancel" style={{ width: '100px' }} onClick={this.props.history.goBack} />
+                            <input type="button" value="Cancel" style={{ width: '100px' }} onClick={this.props.history.goBack} />
                         </form >)
                         :
                         ('Loading... please wait')

@@ -21,6 +21,11 @@ class SessionList extends Component
         return data;
     }
 
+    addSession = () =>
+    {
+        this.props.history.push(`/session-edit/0/${this.props.match.params.userId}`);
+    }
+
     render()
     {
         if (this.state.sessions == null)
@@ -34,29 +39,32 @@ class SessionList extends Component
                     this.state.sessions
                         ?
                         (
-                            <table className="grid">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Location</th>
-                                        <th>With</th>
-                                        <th>Comment</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.state.sessions.map(s =>
-                                        <tr key={s.id}>
-                                            <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}/${this.props.match.params.userId}`}>{new Date(s.date).toDateString()}</Link></td>
-                                            <td style={{ whiteSpace: 'nowrap' }}>{s.locationName}</td>
-                                            <td>{s.partnerNames}</td>
-                                            <td>{s.comment}</td>
-                                            <td><Link to={`/session-edit/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/edit.png')} /></Link></td>
-                                            <td><Link to={`/session-delete/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/delete.png')} /></Link></td>
-                                        </tr >)}
-                                </tbody >
-                            </table >
+                            <>
+                                <p><button onClick={this.addSession}>Add session</button></p>
+                                <table className="grid">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Location</th>
+                                            <th>With</th>
+                                            <th>Comment</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.sessions.map(s =>
+                                            <tr key={s.id}>
+                                                <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}/${this.props.match.params.userId}`}>{new Date(s.date).toDateString()}</Link></td>
+                                                <td style={{ whiteSpace: 'nowrap' }}>{s.locationName}</td>
+                                                <td>{s.partnerNames}</td>
+                                                <td>{s.comment}</td>
+                                                <td><Link to={`/session-edit/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/edit.png')} /></Link></td>
+                                                <td><Link to={`/session-delete/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/delete.png')} /></Link></td>
+                                            </tr >)}
+                                    </tbody >
+                                </table >
+                            </>
                         )
                         :
                         ('Loading... please wait')
