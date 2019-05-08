@@ -9,6 +9,7 @@ import Login from "./Login";
 import SessionList from "./SessionList";
 import SessionDetail from "./SessionDetail";
 import SessionEdit from "./SessionEdit";
+import SessionDelete from "./SessionDelete";
 
 class App extends Component
 {
@@ -69,6 +70,7 @@ class App extends Component
                     <Route exact path="/sessions/:userId" component={SessionList} />
                     <Route path="/sessions/:id/:userId" component={SessionDetail} />
                     <Route path="/session-edit/:id/:userId" component={SessionEdit} />
+                    <Route path="/session-delete/:id/:userId" component={SessionDelete} />
                 </div>
             </HashRouter>
         );
