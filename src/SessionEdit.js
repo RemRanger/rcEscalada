@@ -37,6 +37,7 @@ class SessionEdit extends Component
             session =
                 {
                     id: 0,
+                    locationId: 0,
                     date: new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
                     partnerIds: [],
                     comment: ""
@@ -63,13 +64,6 @@ class SessionEdit extends Component
         console.log("Getting locations data:", locations);
 
         this.setState({ locations: locations });
-
-        if (this.state.session.id == 0 && locations != null && locations.length > 0)
-        {
-            let session = this.state.session;
-            session.locationId = locations[0].id;
-            this.setState({ session: session });
-        }
 
         return locations;
     }
@@ -146,7 +140,7 @@ class SessionEdit extends Component
 
     isValid()
     {
-        return this.state.session != null;
+        return this.state.session != null && this.state.session.locationId > 0;
     }
 
     handleSubmit(event)
@@ -167,14 +161,6 @@ class SessionEdit extends Component
         formData.append('userId', this.props.match.params.userId);
         for (let i = 0; i < this.state.session.partnerIds.length; i++)
             formData.append('partnerIds[' + i + ']', this.state.session.partnerIds[i]);
-
-        console.log("urlApiCreate: ", this.state.urlApiCreate);
-        console.log('locationId', this.state.session.locationId);
-        console.log('date', this.state.session.date);
-        console.log('comment', this.state.session.comment);
-        console.log('userId', this.props.match.params.userId);
-        for (let i = 0; i < this.state.session.partnerIds.length; i++)
-            console.log('partnerIds[' + i + ']', this.state.session.partnerIds[i]);
 
         let response = null;
         if (this.state.session.id == 0)
@@ -234,14 +220,14 @@ class SessionEdit extends Component
                                     <tr>
                                         <td align="center">
                                             <select name="locationId" required value={this.state.session ? this.state.session.locationId : 0} onChange={this.handleChange}>
-                                                <option disabled>--Please select a location--</option>
+                                                <option disabled value={0}>--Please select a location--</option>
                                                 {this.state.locations.map(l =>
                                                     <option key={l.id} value={l.id}>{l.name}</option>)
                                                 }
                                             </select >
                                         </td >
                                     </tr >
-                                    {/*<tr ><td align="center" style={{ color: 'red', fontSizeAdjust: 0.4 }}>Please select a location.</td></tr >*/}
+                                    {/* this.state.session.locationId <= 0 ? <tr ><td align="center" style={{ color: 'red', fontSizeAdjust: 0.4 }}>Please select a location.</td></tr > : ""*/}
                                     <tr>
                                         <td align="center">
                                             <select name="partnerIds" multiple size='30' onChange={this.handlePartnersChange}>
