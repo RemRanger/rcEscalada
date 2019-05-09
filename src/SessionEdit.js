@@ -168,15 +168,17 @@ class SessionEdit extends Component
         for (let i = 0; i < this.state.session.partnerIds.length; i++)
             formData.append('partnerIds[' + i + ']', this.state.session.partnerIds[i]);
 
+        console.log("urlApiCreate: ", this.state.urlApiCreate);
+        console.log('locationId', this.state.session.locationId);
+        console.log('date', this.state.session.date);
+        console.log('comment', this.state.session.comment);
+        console.log('userId', this.props.match.params.userId);
+        for (let i = 0; i < this.state.session.partnerIds.length; i++)
+            console.log('partnerIds[' + i + ']', this.state.session.partnerIds[i]);
 
         let response = null;
         if (this.state.session.id == 0)
         {
-            console.log("urlApiCreate: ", this.state.urlApiCreate);
-            console.log('locationId', this.state.session.locationId);
-            console.log('date', this.state.session.date);
-            console.log('comment', this.state.session.comment);
-            console.log('userId', this.props.match.params.userId);
             response = await fetch(this.state.urlApiCreate,
                 {
                     method: 'post',
@@ -244,7 +246,7 @@ class SessionEdit extends Component
                                         <td align="center">
                                             <select name="partnerIds" multiple size='30' onChange={this.handlePartnersChange}>
                                                 <option disabled>--Were you with others? If so, please select--</option>
-                                                {this.state.users.map(u =>
+                                                {this.state.users.filter(u => u.id != this.props.match.params.userId).map(u =>
                                                     <option key={u.id} value={u.id} selected={this.state.session != null && this.state.session.partnerIds.includes(u.id.toString())}>{u.firstName} {u.lastName}</option>)
                                                 }
                                             </select>
