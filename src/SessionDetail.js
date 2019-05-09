@@ -7,7 +7,8 @@ class SessionDetail extends Component
     state =
         {
             session: null,
-            hasLoaded: false,
+            hasLoadedSession: false,
+            hasLoadedUser: false,
             urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
             urlApiReadUser: `${getApiUrl('user', "read")}`
         }
@@ -18,7 +19,7 @@ class SessionDetail extends Component
         let data = await response.json();
         console.log("Getting session data:", data);
 
-        this.setState({ session: data[0], hasLoaded: true });
+        this.setState({ session: data[0], hasLoadedSession: true });
 
         return data;
     }
@@ -26,23 +27,23 @@ class SessionDetail extends Component
     getUserAsync = async () =>
     {
         let response = await fetch(this.state.urlApiReadUser);
-        let data = await response.json();
-        console.log("Getting user data:", data);
+        let users = await response.json();
+        console.log("Getting user data:", users);
 
-        this.setState({ user: data.filter(d => d.id === this.props.match.params.userId)[0], hasLoaded: true });
+        let user = users.filter(d => d.id == this.props.match.params.userId)[0];
+        console.log("User: ", user);
 
-        return data;
+        this.setState({ user: user, hasLoadedUser: true });
+
+        return users;
     }
 
     render()
     {
-        //if (!this.state.hasLoaded)
-        //{
-            if (this.state.session == null)
-                this.getSessionAsync();
-            if (this.state.user == null)
-                this.getUserAsync();
-        //}
+        if (!this.state.hasLoadedSession && this.state.session == null)
+            this.getSessionAsync();
+        if (!this.state.hasLoadedUser && this.state.user == null)
+            this.getUserAsync();
 
         return (
             <div align="center">
@@ -75,7 +76,7 @@ class SessionDetail extends Component
                             </div>
                         )
                         :
-                        this.state.hasLoaded ? ('No results.') : ('Loading... please wait')
+                        this.state.hasLoadedSession && this.state.hasLoadedUser ? ('No results.') : ('Loading... please wait')
                 }
             </div >
         );
