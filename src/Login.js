@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getApiUrl } from "./Utils";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 class Login extends Component
 {
@@ -99,7 +99,7 @@ class Login extends Component
                         {this.state.user != null && this.state.user.id < 0 ? <div style={{ color: 'red' }}>User name or password are incorrect.</div> : ""}
                         <br />
                         <button disabled={!this.isValid()} type="submit" value="Submit">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                {/*<a>Register</a>*/}
+                        <Link to="/register">Register</Link>
                     </form >
                 </div >
             );
