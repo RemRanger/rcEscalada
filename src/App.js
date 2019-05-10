@@ -12,7 +12,7 @@ import SessionDetail from "./SessionDetail";
 import SessionEdit from "./SessionEdit";
 import SessionDelete from "./SessionDelete";
 import AttemptEdit from "./AttemptEdit";
-//import AttemptDelete from "./AttemptDelete";
+import AttemptDelete from "./AttemptDelete";
 
 class App extends Component
 {
@@ -76,7 +76,7 @@ class App extends Component
                     <Route path="/session-edit/:id/:userId" component={SessionEdit} />
                     <Route path="/session-delete/:id/:userId" component={SessionDelete} />
                     <Route path="/attempt-edit/:id/:sessionId/:userId" component={AttemptEdit} />
-                    {/*<Route path="/attempt-delete/:id/:sessionId/:userId" component={AttemptDelete} />*/}
+                    <Route path="/attempt-delete/:id/:sessionId/:userId" component={AttemptDelete} />
                 </div>
             </HashRouter>
         );

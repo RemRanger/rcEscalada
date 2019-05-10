@@ -81,7 +81,7 @@ class AttemptList extends Component
                                         }
                                         <td>{a.comment}</td>
                                         <td><Link to={`/attempt-edit/${a.id}/${a.sessionId}/${this.props.userId}`}><img src={require('./assets/edit.png')} /></Link></td>
-                                        <td><Link to={`/attempt-delete/${a.id}/${this.props.userId}`}><img src={require('./assets/delete.png')} /></Link></td>
+                                        <td><Link to={`/attempt-delete/${a.id}/${a.sessionId}/${this.props.userId}`}><img src={require('./assets/delete.png')} /></Link></td>
                                     </tr>)}
                             </tbody>
                         </table>

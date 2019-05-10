@@ -3,7 +3,7 @@ import { getApiUrl } from "./Utils";
 import DatePicker from "./DatePicker";
 import { Redirect } from "react-router-dom";
 
-class SessionDelete extends Component
+class AttemptDelete extends Component
 {
     constructor(props)
     {
@@ -11,43 +11,43 @@ class SessionDelete extends Component
 
         this.state =
             {
-                session: null,
-                urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
-                urlApiDelete: `${getApiUrl("session", "delete")}?id=${this.props.match.params.id}`,
+                attempt: null,
+                urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
+                urlApiDelete: `${getApiUrl("attempt", "delete")}?id=${this.props.match.params.id}`,
                 redirectPath: null
             }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    getSessionAsync = async () =>
+    getAttemptAsync = async () =>
     {
         let response = await fetch(this.state.urlApiRead);
-        let sessions = await response.json();
-        console.log("Getting session data:", sessions);
+        let attempts = await response.json();
+        console.log("Getting attempt data:", attempts);
 
-        let session = sessions[0];
-        this.setState({ session: session, hasLoadedSession: true });
+        let attempt = attempts[0];
+        this.setState({ attempt: attempt, hasLoadedAttempt: true });
 
-        return session;
+        return attempt;
     }
 
     isValid()
     {
-        return this.state.session != null;
+        return this.state.attempt != null;
     }
 
     handleSubmit(event)
     {
         event.preventDefault();
 
-        this.submitSessionAsync();
+        this.submitAttemptAsync();
     }
 
-    submitSessionAsync = async () =>
+    submitAttemptAsync = async () =>
     {
         let formData = new FormData();
-        formData.append('id', this.state.session.id);
+        formData.append('id', this.state.attempt.id);
 
         let response = null;
         response = await fetch(this.state.urlApiDelete,
@@ -59,7 +59,7 @@ class SessionDelete extends Component
         try
         {
             data = await response.json();
-            this.setState({ submitted: true });
+            this.goBack();
         }
         finally
         {
@@ -69,24 +69,24 @@ class SessionDelete extends Component
 
     goBack = () =>
     {
-        this.setState({ redirectPath: `/sessions/${this.props.match.params.userId}` });
+        this.setState({ redirectPath: `/sessions/${this.props.match.params.sessionId}/${this.props.match.params.userId}` });
     }
 
     render()
     {
-        if (this.state.session == null && !this.state.hasLoadedSession)
-            this.getSessionAsync();
+        if (this.state.attempt == null && !this.state.hasLoadedAttempt)
+            this.getAttemptAsync();
 
         if (!this.state.redirectPath)
         {
             return (
                 <div align="center">
-                    <h1>Delete session</h1>
-                    {this.state.session != null
+                    <h1>Delete attempt</h1>
+                    {this.state.attempt != null
                         ?
                         (<div align="center">
                             <form method="post" onSubmit={this.handleSubmit}>
-                                <p>Are you sure you want to delete your session of {this.state.session.date} at {this.state.session.locationName}?</p>
+                                <p>Are you sure you want to delete your attempt on route '{this.state.attempt.routeName}'?</p>
                                 <button style={{ width: '100px' }} type="submit" disabled={!this.isValid}>Yes</button>&nbsp;&nbsp;
                                     <input type="button" value="No" style={{ width: '100px' }} onClick={this.goBack} />
                             </form>
@@ -102,4 +102,4 @@ class SessionDelete extends Component
     }
 }
 
-export default SessionDelete;
+export default AttemptDelete;

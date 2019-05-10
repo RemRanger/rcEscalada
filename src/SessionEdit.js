@@ -207,7 +207,7 @@ class SessionEdit extends Component
         if (this.state.users == null)
             this.getUsersAsync();
 
-        if (this.state.redirectPath == null)
+        if (!this.state.redirectPath)
         {
             return (
                 <div align="center">
