@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getApiUrl } from "./Utils";
+import { getApiUrl, formatDate } from "./Utils";
 import { Redirect } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
 
@@ -94,26 +94,12 @@ class AttemptEdit extends Component
 
     handleChange(event)
     {
-        let name = event.target.name;
-        let value = event.target.value;
-
-        let attempt = this.state.attempt;
-        if (attempt !== null)
+        if (this.state.attempt !== null)
         {
-            if (name === 'userId')
-                attempt.userId = value;
-            else if (name === 'sessionId')
-                attempt.sessionId = value;
-            else if (name === 'routeId')
-                attempt.routeId = value;
-            else if (name === 'comment')
-                attempt.comment = value;
-            else if (name === 'result')
-                attempt.result = value;
-            else if (name === 'percentage')
-                attempt.percentage = value;
-
-            this.setState({ attempt: attempt });
+            let name = event.target.name;
+            let value = event.target.value;
+            this.state.attempt[name] = value;
+            this.setState({ attempt: this.state.attempt });
         }
     }
 
@@ -194,7 +180,7 @@ class AttemptEdit extends Component
                                 <tbody>
                                     <tr>
                                         <td align="center">
-                                            <label>{new Date(this.state.session.date).toDateString()} at {this.state.session.locationName}</label>
+                                            <label>{formatDate(this.state.session.date)} at {this.state.session.locationName}</label>
                                         </td>
                                     </tr>
                                     <tr>

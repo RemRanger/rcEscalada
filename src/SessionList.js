@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
-import { getApiUrl } from "./Utils";
+import { getApiUrl, formatDate } from "./Utils";
 import WaitLoading from "./WaitLoading";
 
 class SessionList extends Component
@@ -57,7 +57,7 @@ class SessionList extends Component
                                         <tbody>
                                             {this.state.sessions.map(s =>
                                                 <tr key={s.id}>
-                                                    <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}/${this.props.match.params.userId}`}>{new Date(s.date).toDateString()}</Link></td>
+                                                    <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}/${this.props.match.params.userId}`}>{formatDate(s.date)}</Link></td>
                                                     <td style={{ whiteSpace: 'nowrap' }}>{s.locationName}</td>
                                                     <td>{s.partnerNames}</td>
                                                     <td>{s.comment}</td>

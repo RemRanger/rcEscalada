@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getResultPic } from "./Utils";
-import { getApiUrl } from "./Utils";
+import { getApiUrl, formatDate } from "./Utils";
 import { Link } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
 
@@ -94,7 +94,7 @@ class ActivityList extends Component
                                         <td>
                                             <table class="grid" width="100%">
                                                 <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
-                                                    <td colspan="100">{new Date(g.attempts[0].sessionDate).toDateString()}, {g.attempts[0].locationName}</td>
+                                                    <td colspan="100">{formatDate(g.attempts[0].sessionDate)}, {g.attempts[0].locationName}</td>
                                                 </tr>
                                                 <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                                                     <td colspan="100">

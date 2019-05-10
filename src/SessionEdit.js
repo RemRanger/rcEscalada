@@ -92,20 +92,8 @@ class SessionEdit extends Component
     {
         let name = event.target.name;
         let value = event.target.value;
-
-        let session = this.state.session;
-        if (session !== null)
-        {
-            if (name === 'locationId')
-                session.locationId = value;
-            else if (name === 'comment')
-                session.comment = value;
-            else if (name === 'partnerIds')
-            {
-                session.partnerIds = value;
-            }
-            this.setState({ session: session });
-        }
+        this.state.session[name] = value;
+        this.setState({ session: this.state.session });
 
     }
 

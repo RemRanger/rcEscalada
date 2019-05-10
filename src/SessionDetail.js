@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AttemptList from "./AttemptList";
-import { getApiUrl } from "./Utils";
+import { getApiUrl, formatDate } from "./Utils";
 import WaitLoading from "./WaitLoading";
 
 class SessionDetail extends Component
@@ -45,7 +45,7 @@ class SessionDetail extends Component
 
         return (
             <div align="center">
-                <h1>Session {this.state.session ? ": " + new Date(this.state.session.date).toDateString() : ""}</h1>
+                <h1>Session {this.state.session ? ": " + formatDate(this.state.session.date) : ""}</h1>
                 {
                     this.state.session && this.state.user
                         ?
