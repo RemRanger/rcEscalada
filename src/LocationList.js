@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { getApiUrl } from "./Utils";
+import WaitLoading from "./WaitLoading";
 
 class LocationList extends Component
 {
@@ -48,7 +49,7 @@ class LocationList extends Component
                             </table>
                         )
                         :
-                        ('Loading... please wait')
+                        <WaitLoading />
                 }
                 <p><a href={this.state.urlApiRead}>API</a></p>
             </div >

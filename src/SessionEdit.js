@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getApiUrl } from "./Utils";
 import DatePicker from "./DatePicker";
 import { Redirect } from "react-router-dom";
+import WaitLoading from "./WaitLoading";
 
 class SessionEdit extends Component
 {
@@ -255,7 +256,7 @@ class SessionEdit extends Component
                             <input type="button" value="Cancel" style={{ width: '100px' }} onClick={this.goBack} />
                         </form >)
                         :
-                        ('Loading... please wait')
+                        <WaitLoading />
                     }
                 </div >)
         }

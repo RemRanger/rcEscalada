@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import { getApiUrl } from "./Utils";
+import WaitLoading from "./WaitLoading";
 
 class SessionList extends Component
 {
@@ -69,7 +70,7 @@ class SessionList extends Component
                                 </>
                             )
                             :
-                            ('Loading... please wait')
+                        <WaitLoading />
                     }
                     <p><a href={this.state.urlApiRead}>API</a></p>
                 </div >

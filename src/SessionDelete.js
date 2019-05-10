@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getApiUrl } from "./Utils";
-import DatePicker from "./DatePicker";
+import WaitLoading from "./WaitLoading";
 import { Redirect } from "react-router-dom";
 
 class SessionDelete extends Component
@@ -93,7 +93,7 @@ class SessionDelete extends Component
                         </div >
                         )
                         :
-                        ('Loading... please wait')
+                        <WaitLoading />
                     }
                 </div >)
         }

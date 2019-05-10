@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AttemptList from "./AttemptList";
 import { getApiUrl } from "./Utils";
+import WaitLoading from "./WaitLoading";
 
 class SessionDetail extends Component
 {
@@ -71,13 +72,13 @@ class SessionDetail extends Component
                                         </tr>
                                     </tbody>
                                 </table>
-                                <br/>
+                                <br />
                                 <p>{this.state.session.name}</p>
                                 <AttemptList sessionId={this.props.match.params.id} userId={this.props.match.params.userId} />
                             </div>
                         )
                         :
-                        this.state.hasLoadedSession && this.state.hasLoadedUser ? ('No results.') : ('Loading... please wait')
+                        <WaitLoading hasLoaded={this.state.hasLoadedSession && this.state.hasLoadedUser} />
                 }
             </div >
         );

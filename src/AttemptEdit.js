@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getApiUrl } from "./Utils";
 import { Redirect } from "react-router-dom";
+import WaitLoading from "./WaitLoading";
 
 class AttemptEdit extends Component
 {
@@ -256,7 +257,7 @@ class AttemptEdit extends Component
                     </div >)
             }
             else
-                return <p align="center">Loading... please wait.</p>
+                return <WaitLoading/>
         }
         else
             return <Redirect to={this.state.redirectPath} />;

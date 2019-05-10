@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RouteList from "./RouteList";
+import WaitLoading from "./WaitLoading";
 
 class LocationDetail extends Component
 {
@@ -34,7 +35,7 @@ class LocationDetail extends Component
                             </div>
                         )
                         :
-                        ('Loading... please wait')
+                        <WaitLoading />
                 }
             </div >
         );

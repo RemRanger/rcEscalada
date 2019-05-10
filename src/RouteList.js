@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getResultPic } from "./Utils";
 import { getApiUrl } from "./Utils";
+import WaitLoading from "./WaitLoading";
 
 class RouteList extends Component
 {
@@ -61,7 +62,7 @@ class RouteList extends Component
                             </table>
                         )
                         :
-                        this.state.hasLoaded ? ('No results.') : ('Loading... please wait')
+                        <WaitLoading hasLoaded={this.state.hasLoaded} />
                 }
                 <p><a href={this.state.urlApiRead}>API</a></p>
             </div >
