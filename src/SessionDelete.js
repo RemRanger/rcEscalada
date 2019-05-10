@@ -24,7 +24,6 @@ class SessionDelete extends Component
     {
         let response = await fetch(this.state.urlApiRead);
         let sessions = await response.json();
-        console.log("Getting session data:", sessions);
 
         let session = sessions[0];
         this.setState({ session: session, hasLoadedSession: true });
@@ -59,7 +58,7 @@ class SessionDelete extends Component
         try
         {
             data = await response.json();
-            this.setState({ submitted: true });
+            this.goBack();
         }
         finally
         {

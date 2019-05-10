@@ -10,7 +10,6 @@ class LocationDetail extends Component
     {
         let response = await fetch(`https://www.remranger.com/escalada-api/location-read.php?id=${this.props.match.params.id}`);
         let data = await response.json();
-        console.log("Getting locations data:", data);
 
         this.setState({ location: data[0] });
 

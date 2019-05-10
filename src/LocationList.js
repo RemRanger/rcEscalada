@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getApiUrl } from "./Utils";
 import WaitLoading from "./WaitLoading";
 
@@ -11,7 +11,6 @@ class LocationList extends Component
     {
         let response = await fetch(this.state.urlApiRead);
         let data = await response.json();
-        console.log("Getting locations data:", data);
 
         this.setState({ locations: data });
 
@@ -23,7 +22,6 @@ class LocationList extends Component
         if (this.state.locations == null)
             this.getLocationsAsync();
 
-        console.log("Rendering, this.state.locations:", this.state.locations);
         return (
             <div align="center">
                 <h1>Locations</h1>

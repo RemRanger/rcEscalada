@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getResultPic } from "./Utils";
 import { getApiUrl } from "./Utils";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
 
 class Attempt
@@ -45,7 +45,6 @@ class ActivityList extends Component
         try
         {
             data = await response.json();
-            //console.log("Getting attempts data:", data);
         }
         finally
         {

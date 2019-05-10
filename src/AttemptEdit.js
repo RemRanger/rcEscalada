@@ -35,7 +35,7 @@ class AttemptEdit extends Component
     getAttemptAsync = async () =>
     {
         let attempt = null;
-        if (this.props.match.params.id == 0)
+        if (parseInt(this.props.match.params.id) === 0)
             attempt =
                 {
                     id: 0,
@@ -115,8 +115,6 @@ class AttemptEdit extends Component
 
             this.setState({ attempt: attempt });
         }
-
-        //console.log("Attempt: ", name, value, attempt);
     }
 
     isValid()
@@ -144,14 +142,13 @@ class AttemptEdit extends Component
         formData.append('percentage', this.state.attempt.percentage);
 
         let response = null;
-        if (this.state.attempt.id == 0)
+        if (parseInt(this.state.attempt.id) === 0)
         {
             response = await fetch(this.state.urlApiCreate,
                 {
                     method: 'post',
                     body: formData
                 });
-            console.log("Submit: ", this.state.urlApiCreate);
         }
         else
         {
@@ -160,13 +157,11 @@ class AttemptEdit extends Component
                     method: 'post',
                     body: formData
                 });
-            console.log("Submit: ", this.state.urlApiUpdate);
         }
         let data = null;
         try
         {
             data = await response.json();
-            console.log("Getting response:", data);
             this.goBack();
         }
         finally
@@ -209,9 +204,9 @@ class AttemptEdit extends Component
                                                     <tbody>
                                                         {this.state.routes.filter(r => r.dateUntil == null || this.state.attempt.id > 0).map(r =>
                                                             <tr key={r.id} style={{
-                                                                color: r.id == this.state.attempt.routeId ? 'white' : '',
-                                                                backgroundColor: r.id == this.state.attempt.routeId ? 'black' : '',
-                                                                opacity: r.id == this.state.attempt.routeId ? '0.5' : ''
+                                                                color: parseInt(r.id) === parseInt(this.state.attempt.routeId) ? 'white' : '',
+                                                                backgroundColor: parseInt(r.id) === parseInt(this.state.attempt.routeId) ? 'black' : '',
+                                                                opacity: parseInt(r.id) === parseInt(this.state.attempt.routeId) ? '0.5' : ''
                                                             }}>
                                                                 <td><input type="radio" name="routeId" value={r.id} onChange={this.handleChange} /></td>
                                                                 <td style={{ width: '16px', backgroundColor: r.color }}></td>
@@ -233,7 +228,7 @@ class AttemptEdit extends Component
                                                 <option value="1">With fall or block</option>
                                                 <option value="2">In one go</option>
                                             </select>
-                                            {this.state.attempt.result == 0 ?
+                                            {parseInt(this.state.attempt.result) === 0 ?
                                                 (<span >
                                                     <select name="percentage" value={this.state.attempt.percentage} onChange={this.handleChange}>
                                                         {this.state.percentages.map(p => <option key={p} value={p}>{p}</option>)}

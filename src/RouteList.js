@@ -14,7 +14,6 @@ class RouteList extends Component
         try
         {
             data = await response.json();
-            //console.log("Getting routes data:", data);
         }
         finally
         {

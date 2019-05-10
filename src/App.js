@@ -26,7 +26,6 @@ class App extends Component
     handleLoggedIn = (newUser) =>
     {
         this.setState({ user: newUser });
-        console.log("App user:", newUser);
     }
 
     logout = () =>
@@ -57,7 +56,7 @@ class App extends Component
                                     (
                                         <>
                                             <li><NavLink to={`/sessions/${this.state.user.id}`}>My sessions</NavLink></li>
-                                            <li><a href="#" onClick={this.logout}>Logout {this.state.user.firstName}</a></li>
+                                            <li><a href="/home" onClick={this.logout}>Logout {this.state.user.firstName}</a></li>
                                         </>
                                     )}
                         </ul>

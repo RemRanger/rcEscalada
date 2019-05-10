@@ -21,7 +21,6 @@ class AttemptList extends Component
         try
         {
             data = await response.json();
-            //console.log("Getting attempts data:", data);
         }
         finally
         {
@@ -81,8 +80,8 @@ class AttemptList extends Component
                                                             <td align="center">{getResultPic(a.result) != null ? <img src={require('./assets/' + getResultPic(a.result))} alt="" /> : ""}</td>
                                                     }
                                                     <td>{a.comment}</td>
-                                                    <td><Link to={`/attempt-edit/${a.id}/${a.sessionId}/${this.props.userId}`}><img src={require('./assets/edit.png')} /></Link></td>
-                                                    <td><Link to={`/attempt-delete/${a.id}/${a.sessionId}/${this.props.userId}`}><img src={require('./assets/delete.png')} /></Link></td>
+                                                    <td><Link to={`/attempt-edit/${a.id}/${a.sessionId}/${this.props.userId}`}><img src={require('./assets/edit.png')} alt="Edit"/></Link></td>
+                                                    <td><Link to={`/attempt-delete/${a.id}/${a.sessionId}/${this.props.userId}`}><img src={require('./assets/delete.png')} alt="Delete"/></Link></td>
                                                 </tr>)}
                                         </tbody>
                                     </table>

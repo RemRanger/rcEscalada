@@ -10,7 +10,6 @@ class UserList extends Component
     {
         let response = await fetch(this.state.urlApiRead);
         let data = await response.json();
-        console.log("Getting climbers data:", data);
 
         this.setState({ users: data });
 
@@ -22,7 +21,6 @@ class UserList extends Component
         if (this.state.users == null)
             this.getUsersAsync();
 
-        console.log("Rendering, this.state.climbers:", this.state.users);
         return (
             <div align="center">
                 <h1>Climbers</h1>

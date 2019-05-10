@@ -42,8 +42,6 @@ class Register extends Component
         let name = event.target.name;
         let value = event.target.value;
         this.setState({ [name]: value, touched: true });
-
-        console.log("change: ", name, value);
     }
 
     handleSubmit(event)
@@ -73,9 +71,7 @@ class Register extends Component
         let data = null;
         try
         {
-            console.log("Submit");
             data = await response.json();
-            console.log("Getting response:", data);
             this.setState({ submitted: true });
         }
         finally

@@ -34,7 +34,7 @@ class SessionEdit extends Component
     getSessionAsync = async () =>
     {
         let session = null;
-        if (this.props.match.params.id == 0)
+        if (parseInt(this.props.match.params.id) === 0)
             session =
                 {
                     id: 0,
@@ -47,7 +47,6 @@ class SessionEdit extends Component
         {
             let response = await fetch(this.state.urlApiRead);
             let sessions = await response.json();
-            console.log("Getting session data:", sessions);
 
             session = sessions[0];
             session.partnerIds = session.partnerIdsAsString != null ? session.partnerIdsAsString.toString().split(",").map(i => i.trim()) : "";
@@ -62,7 +61,6 @@ class SessionEdit extends Component
     {
         let response = await fetch(this.state.urlApiReadLocations);
         let locations = await response.json();
-        console.log("Getting locations data:", locations);
 
         this.setState({ locations: locations });
 
@@ -73,7 +71,6 @@ class SessionEdit extends Component
     {
         let response = await fetch(this.state.urlApiReadUsers);
         let data = await response.json();
-        console.log("Getting users data:", data);
 
         this.setState({ users: data });
 
@@ -87,10 +84,8 @@ class SessionEdit extends Component
             let session = this.state.session;
             session.date = newDate;
             this.setState({ session: session });
-            console.log("Session: ", session);
         }
 
-        console.log("Date set: ", newDate);
     }
 
     handleChange(event)
@@ -107,13 +102,11 @@ class SessionEdit extends Component
                 session.comment = value;
             else if (name === 'partnerIds')
             {
-                console.log("PartnerIds: ", value);
                 session.partnerIds = value;
             }
             this.setState({ session: session });
         }
 
-        console.log("Session: ", session);
     }
 
     handlePartnersChange(event)
@@ -132,10 +125,6 @@ class SessionEdit extends Component
             let session = this.state.session;
             session.partnerIds = value;
             this.setState({ session: session });
-
-            console.log("partnerIds: ", value);
-
-            //this.props.someCallback(value);
         }
     }
 
@@ -164,7 +153,7 @@ class SessionEdit extends Component
             formData.append('partnerIds[' + i + ']', this.state.session.partnerIds[i]);
 
         let response = null;
-        if (this.state.session.id == 0)
+        if (parseInt(this.state.session.id) === 0)
         {
             response = await fetch(this.state.urlApiCreate,
                 {
@@ -183,9 +172,7 @@ class SessionEdit extends Component
         let data = null;
         try
         {
-            console.log("Submit");
             data = await response.json();
-            console.log("Getting response:", data);
             this.goBack();
         }
         finally
@@ -238,7 +225,7 @@ class SessionEdit extends Component
                                         <td align="center">
                                             <select name="partnerIds" multiple size='30' onChange={this.handlePartnersChange}>
                                                 <option disabled>--Were you with others? If so, please select--</option>
-                                                {this.state.users.filter(u => u.id != this.props.match.params.userId).map(u =>
+                                                {this.state.users.filter(u => parseInt(u.id) !== parseInt(this.props.match.params.userId)).map(u =>
                                                     <option key={u.id} value={u.id} selected={this.state.session != null && this.state.session.partnerIds.includes(u.id.toString())}>{u.firstName} {u.lastName}</option>)
                                                 }
                                             </select>

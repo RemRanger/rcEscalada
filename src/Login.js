@@ -60,12 +60,10 @@ class Login extends Component
         try
         {
             data = await response.json();
-            console.log("Getting user data:", data);
         }
         finally
         {
             this.setState({ user: data });
-            console.log("Login user:", this.state.user);
             this.props.onLoggedIn(data);
         }
         return data;

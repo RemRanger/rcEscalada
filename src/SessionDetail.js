@@ -18,7 +18,6 @@ class SessionDetail extends Component
     {
         let response = await fetch(this.state.urlApiRead);
         let data = await response.json();
-        console.log("Getting session data:", data);
 
         this.setState({ session: data[0], hasLoadedSession: true });
 
@@ -29,10 +28,8 @@ class SessionDetail extends Component
     {
         let response = await fetch(this.state.urlApiReadUser);
         let users = await response.json();
-        console.log("Getting user data:", users);
 
-        let user = users.filter(d => d.id == this.props.match.params.userId)[0];
-        console.log("User: ", user);
+        let user = users.filter(d => parseInt(d.id) === parseInt(this.props.match.params.userId))[0];
 
         this.setState({ user: user, hasLoadedUser: true });
 

@@ -24,7 +24,6 @@ class AttemptDelete extends Component
     {
         let response = await fetch(this.state.urlApiRead);
         let attempts = await response.json();
-        console.log("Getting attempt data:", attempts);
 
         let attempt = attempts[0];
         this.setState({ attempt: attempt, hasLoadedAttempt: true });
