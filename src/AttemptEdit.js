@@ -96,10 +96,11 @@ class AttemptEdit extends Component
     {
         if (this.state.attempt !== null)
         {
+            let attempt = this.state.attempt;
             let name = event.target.name;
             let value = event.target.value;
-            this.state.attempt[name] = value;
-            this.setState({ attempt: this.state.attempt });
+            attempt[name] = value;
+            this.setState({ attempt: attempt });
         }
     }
 
@@ -194,7 +195,7 @@ class AttemptEdit extends Component
                                                                 backgroundColor: parseInt(r.id) === parseInt(this.state.attempt.routeId) ? 'black' : '',
                                                                 opacity: parseInt(r.id) === parseInt(this.state.attempt.routeId) ? '0.5' : ''
                                                             }}>
-                                                                <td><input type="radio" name="routeId" value={r.id} onChange={this.handleChange} /></td>
+                                                                <td><input type="radio" name="routeId" value={r.id} checked={parseInt(r.id) === parseInt(this.state.attempt.routeId)} onChange={this.handleChange} /></td>
                                                                 <td style={{ width: '16px', backgroundColor: r.color }}></td>
                                                                 <td>{r.name}</td>
                                                                 <td>{r.type}</td>

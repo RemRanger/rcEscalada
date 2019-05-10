@@ -90,10 +90,11 @@ class SessionEdit extends Component
 
     handleChange(event)
     {
+        let session = this.state.session;
         let name = event.target.name;
         let value = event.target.value;
-        this.state.session[name] = value;
-        this.setState({ session: this.state.session });
+        session[name] = value;
+        this.setState({ session: session });
 
     }
 
