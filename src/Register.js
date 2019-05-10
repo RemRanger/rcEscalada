@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getApiUrl } from "./Utils";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class Register extends Component
 {
@@ -29,9 +29,7 @@ class Register extends Component
     isValid()
     {
         return this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.gender.length > 0 && this.state.email.length > 0 && this.state.userName.length > 0 &&
-            this.state.password.length > 0 && this.state.password == this.state.passwordMatch;
-
-        console.log("isValid? firstName: ", this.state.firstName);
+            this.state.password.length > 0 && this.state.password === this.state.passwordMatch;
     }
 
     isTouched()
@@ -109,8 +107,8 @@ class Register extends Component
                             {/*<tr ngIf="(lastName.touched || lastName.dirty) && !lastName.valid" ><td style={{ color: 'red', fontSizeAdjust: 0.4 }}>Please enter your last name.</td></tr >*/}
                             < tr class="noalt" >
                                 <td class="noborder">
-                                    <input type="radio" id="genderId" name="gender" value="M" required checked={this.state.gender == "M"} onChange={this.handleChange} />Male&nbsp;&nbsp;
-                                <input type="radio" id="genderId" name="gender" value="F" required checked={this.state.gender == "F"} onChange={this.handleChange} />Female
+                                    <input type="radio" id="genderId" name="gender" value="M" required checked={this.state.gender === "M"} onChange={this.handleChange} />Male&nbsp;&nbsp;
+                                <input type="radio" id="genderId" name="gender" value="F" required checked={this.state.gender === "F"} onChange={this.handleChange} />Female
                             </td>
                             </tr >
                             {/*<tr ngIf= "(gender.touched || gender.dirty) && !gender.valid " > <td style="color:red;font-size-adjust:0.4">Please select your gender.</td></tr >*/}
@@ -138,7 +136,7 @@ class Register extends Component
                                     <input type="password" id="passwordMatchId" size="30" name="passwordMatch" placeholder="Your Password (again)" required value={this.state.passwordMatch} onChange={this.handleChange} />
                                 </td>
                             </tr>
-                            {this.state.password != this.state.passwordMatch ? <tr><td style={{ color: 'red', fontSizeAdjust: 0.4 }}>Passwords do not match.</td></tr > : ""}
+                            {this.state.password !== this.state.passwordMatch ? <tr><td style={{ color: 'red', fontSizeAdjust: 0.4 }}>Passwords do not match.</td></tr > : ""}
                         </table >
                         <br />
                         <button type="submit" disabled={!this.isValid()} value="Submit"> Register</button >

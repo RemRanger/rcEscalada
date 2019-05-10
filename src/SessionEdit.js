@@ -20,7 +20,7 @@ class SessionEdit extends Component
                 urlApiReadUsers: getApiUrl("user", "read"),
                 urlApiCreate: getApiUrl("session", "create"),
                 urlApiUpdate: getApiUrl("session", "update"),
-                submitted: false
+                redirectPath: null
             }
 
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -185,12 +185,17 @@ class SessionEdit extends Component
             console.log("Submit");
             data = await response.json();
             console.log("Getting response:", data);
-            this.setState({ submitted: true });
+            this.goBack();
         }
         finally
         {
         }
         return data;
+    }
+
+    goBack = () =>
+    {
+        this.setState({ redirectPath: `/sessions/${this.props.match.params.userId}` });
     }
 
     render()
@@ -202,11 +207,11 @@ class SessionEdit extends Component
         if (this.state.users == null)
             this.getUsersAsync();
 
-        if (!this.state.submitted)
+        if (this.state.redirectPath == null)
         {
             return (
                 <div align="center">
-                    <h1>Edit session</h1>
+                    <h1>{this.state.session != null ? (this.state.session.id > 0 ? "Edit" : "Add") : ""} session</h1>
                     {this.state.locations != null && this.state.users != null
                         ?
                         (<form method="post" novalidate onSubmit={this.handleSubmit}>
@@ -247,7 +252,7 @@ class SessionEdit extends Component
                             </table >
                             <br />
                             <button style={{ width: '100px' }} type="submit" disabled={!this.isValid()} > OK</button >&nbsp;&nbsp;
-                            <input type="button" value="Cancel" style={{ width: '100px' }} onClick={this.props.history.goBack} />
+                            <input type="button" value="Cancel" style={{ width: '100px' }} onClick={this.goBack} />
                         </form >)
                         :
                         ('Loading... please wait')
@@ -255,7 +260,7 @@ class SessionEdit extends Component
                 </div >)
         }
         else
-            return <Redirect to={`/sessions/${this.props.match.params.userId}`} />;
+            return <Redirect to={this.state.redirectPath} />;
     }
 }
 

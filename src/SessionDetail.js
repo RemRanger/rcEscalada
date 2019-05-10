@@ -71,6 +71,7 @@ class SessionDetail extends Component
                                         </tr>
                                     </tbody>
                                 </table>
+                                <br/>
                                 <p>{this.state.session.name}</p>
                                 <AttemptList sessionId={this.props.match.params.id} userId={this.props.match.params.userId} />
                             </div>

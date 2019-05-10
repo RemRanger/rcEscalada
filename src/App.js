@@ -11,6 +11,8 @@ import SessionList from "./SessionList";
 import SessionDetail from "./SessionDetail";
 import SessionEdit from "./SessionEdit";
 import SessionDelete from "./SessionDelete";
+import AttemptEdit from "./AttemptEdit";
+//import AttemptDelete from "./AttemptDelete";
 
 class App extends Component
 {
@@ -68,11 +70,13 @@ class App extends Component
                     <Route path="/climbers" component={UserList} />
                     <Route path="/about" component={About} />
                     <Route path="/login" render={(props) => <Login onLoggedIn={this.handleLoggedIn} />} />
-                    <Route path="/register" component={Register} />} />
+                    <Route path="/register" component={Register} />
                     <Route exact path="/sessions/:userId" component={SessionList} />
                     <Route path="/sessions/:id/:userId" component={SessionDetail} />
                     <Route path="/session-edit/:id/:userId" component={SessionEdit} />
                     <Route path="/session-delete/:id/:userId" component={SessionDelete} />
+                    <Route path="/attempt-edit/:id/:sessionId/:userId" component={AttemptEdit} />
+                    {/*<Route path="/attempt-delete/:id/:sessionId/:userId" component={AttemptDelete} />*/}
                 </div>
             </HashRouter>
         );
