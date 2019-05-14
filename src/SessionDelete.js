@@ -68,7 +68,7 @@ class SessionDelete extends Component
 
     goBack = () =>
     {
-        this.setState({ redirectPath: `/sessions/${this.props.match.params.userId}` });
+        this.setState({ redirectPath: "/sessions" });
     }
 
     render()

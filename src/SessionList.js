@@ -8,8 +8,8 @@ class SessionList extends Component
     state =
         {
             sessions: null,
-            urlApiRead: `${getApiUrl('session', "read")}?userId=${this.props.match.params.userId}`,
-            redirectPath: null
+            urlApiRead: `${getApiUrl('session', "read")}?userId=${this.props.userId}`,
+            redirectPath: this.props.userId ? null : "/home"
         }
 
     getSessionsAsync = async () =>
@@ -24,7 +24,7 @@ class SessionList extends Component
 
     addSession = () =>
     {
-        this.setState({ redirectPath: `/session-edit/0/${this.props.match.params.userId}` });
+        this.setState({ redirectPath: `/session-edit/0/${this.props.userId}` });
     }
 
     render()
@@ -57,12 +57,12 @@ class SessionList extends Component
                                         <tbody>
                                             {this.state.sessions.map(s =>
                                                 <tr key={s.id}>
-                                                    <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}/${this.props.match.params.userId}`}>{formatDate(s.date)}</Link></td>
+                                                    <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}/${this.props.userId}`}>{formatDate(s.date)}</Link></td>
                                                     <td style={{ whiteSpace: 'nowrap' }}>{s.locationName}</td>
                                                     <td>{s.partnerNames}</td>
                                                     <td>{s.comment}</td>
-                                                    <td><Link to={`/session-edit/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/edit.png')} alt="Edit"/></Link></td>
-                                                    <td><Link to={`/session-delete/${s.id}/${this.props.match.params.userId}`}><img src={require('./assets/delete.png')} alt="Delete"/></Link></td>
+                                                    <td><Link to={`/session-edit/${s.id}/${this.props.userId}`}><img src={require('./assets/edit.png')} alt="Edit"/></Link></td>
+                                                    <td><Link to={`/session-delete/${s.id}/${this.props.userId}`}><img src={require('./assets/delete.png')} alt="Delete"/></Link></td>
                                                 </tr >)}
                                         </tbody >
                                     </table >

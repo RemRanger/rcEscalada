@@ -13,6 +13,11 @@ import SessionEdit from "./SessionEdit";
 import SessionDelete from "./SessionDelete";
 import AttemptEdit from "./AttemptEdit";
 import AttemptDelete from "./AttemptDelete";
+import Cookies from "universal-cookie";
+import { getApiUrl } from "./Utils";
+
+const cookies = new Cookies();
+const loginExpiry = 15 * 60; // 15 minutes; 15* 60 secs
 
 class App extends Component
 {
@@ -20,16 +25,35 @@ class App extends Component
     {
         super(props);
 
-        this.state = { user: null }
+        let userId = null;
+        let value = cookies.get("userId");
+        if (value)
+            userId = parseInt(value);
+
+        this.state = { userId: userId, user: null }
+
+        this.updateUser(userId);
+    }
+
+    updateUser = async (userId) =>
+    {
+        let response = await fetch(getApiUrl("user", "read"));
+        let users = await response.json();
+
+        let user = users.filter(d => parseInt(d.id) === parseInt(userId))[0];
+
+        this.setState({ user: user });
     }
 
     handleLoggedIn = (newUser) =>
     {
+        cookies.set("userId", newUser ? newUser.id : null, { path: "/", maxAge: loginExpiry });
         this.setState({ user: newUser });
     }
 
     logout = () =>
     {
+        cookies.set("userId", null, { path: "/" });
         this.setState({ user: null });
     }
 
@@ -55,7 +79,7 @@ class App extends Component
                                     :
                                     (
                                         <>
-                                            <li><NavLink to={`/sessions/${this.state.user.id}`}>My sessions</NavLink></li>
+                                            <li><NavLink to={"/sessions"}>My sessions</NavLink></li>
                                             <li><a href="/home" onClick={this.logout}>Logout {this.state.user.firstName}</a></li>
                                         </>
                                     )}
@@ -70,12 +94,20 @@ class App extends Component
                     <Route path="/about" component={About} />
                     <Route path="/login" render={(props) => <Login onLoggedIn={this.handleLoggedIn} />} />
                     <Route path="/register" component={Register} />
-                    <Route exact path="/sessions/:userId" component={SessionList} />
-                    <Route path="/sessions/:id/:userId" component={SessionDetail} />
-                    <Route path="/session-edit/:id/:userId" component={SessionEdit} />
-                    <Route path="/session-delete/:id/:userId" component={SessionDelete} />
-                    <Route path="/attempt-edit/:id/:sessionId/:userId" component={AttemptEdit} />
-                    <Route path="/attempt-delete/:id/:sessionId/:userId" component={AttemptDelete} />
+                    {this.state.user ?
+                        (
+                            <>
+                                <Route exact path="/sessions" render={() => <SessionList userId={this.state.user.id} />} />
+                                <Route path="/sessions/:id/:userId" component={SessionDetail} />
+                                <Route path="/session-edit/:id/:userId" component={SessionEdit} />
+                                <Route path="/session-delete/:id/:userId" component={SessionDelete} />
+                                <Route path="/attempt-edit/:id/:sessionId/:userId" component={AttemptEdit} />
+                                <Route path="/attempt-delete/:id/:sessionId/:userId" component={AttemptDelete} />
+                            </>
+                        )
+                        :
+                        <Route exact path="/sessions" render={() => (<Redirect to="/home" />)} />
+                    }
                 </div>
             </HashRouter>
         );
