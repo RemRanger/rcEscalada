@@ -43,12 +43,12 @@ class AttemptList extends Component
         {
             return (
                 <div align="center">
+                    <p><button onClick={this.addAttempt}>Add attempt</button></p>
                     {
                         this.state.attempts != null
                             ?
                             (
                                 <>
-                                    <p><button onClick={this.addAttempt}>Add attempt</button></p>
                                     <table className="grid">
                                         <thead>
                                             <tr>

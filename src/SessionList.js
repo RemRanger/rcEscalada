@@ -37,12 +37,12 @@ class SessionList extends Component
             return (
                 <div align="center">
                     <h1>My Sessions</h1>
+                    <p><button onClick={this.addSession}>Add session</button></p>
                     {
                         this.state.sessions
                             ?
                             (
                                 <>
-                                    <p><button onClick={this.addSession}>Add session</button></p>
                                     <table className="grid">
                                         <thead>
                                             <tr>
