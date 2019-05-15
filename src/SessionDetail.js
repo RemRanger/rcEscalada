@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import AttemptList from "./AttemptList";
-import { getApiUrl, formatDate } from "./Utils";
+import { getApiUrl, formatDate, getUserId } from "./Utils";
 import WaitLoading from "./WaitLoading";
 
 class SessionDetail extends Component
 {
-    state =
-        {
-            session: null,
-            hasLoadedSession: false,
-            hasLoadedUser: false,
-            urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
-            urlApiReadUser: `${getApiUrl('user', "read")}`
-        }
+    constructor(props)
+    {
+        super(props);
+
+        let userId = getUserId();
+
+        this.state =
+            {
+                session: null,
+                hasLoadedSession: false,
+                hasLoadedUser: false,
+                userId: userId,
+                urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.match.params.id}&userId=${userId}`,
+                urlApiReadUser: `${getApiUrl('user', "read")}`
+            }
+    }
 
     getSessionAsync = async () =>
     {
@@ -29,7 +37,7 @@ class SessionDetail extends Component
         let response = await fetch(this.state.urlApiReadUser);
         let users = await response.json();
 
-        let user = users.filter(d => parseInt(d.id) === parseInt(this.props.match.params.userId))[0];
+        let user = users.filter(d => parseInt(d.id) === parseInt(this.state.userId))[0];
 
         this.setState({ user: user, hasLoadedUser: true });
 
@@ -71,7 +79,7 @@ class SessionDetail extends Component
                                 </table>
                                 <br />
                                 <p>{this.state.session.name}</p>
-                                <AttemptList sessionId={this.props.match.params.id} userId={this.props.match.params.userId} />
+                                <AttemptList sessionId={this.props.match.params.id} userId={this.state.userId} />
                             </div>
                         )
                         :

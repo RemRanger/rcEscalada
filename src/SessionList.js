@@ -5,12 +5,20 @@ import WaitLoading from "./WaitLoading";
 
 class SessionList extends Component
 {
-    state =
-        {
-            sessions: null,
-            urlApiRead: `${getApiUrl('session', "read")}?userId=${getUserId()}`,
-            redirectPath: getUserId() ? null : "/home"
-        }
+    constructor(props)
+    {
+        super(props);
+
+        let userId = getUserId();
+
+        this.state =
+            {
+                sessions: null,
+                userId: userId,
+                urlApiRead: `${getApiUrl('session', "read")}?userId=${userId}`,
+                redirectPath: userId ? null : "/home"
+            }
+    }
 
     getSessionsAsync = async () =>
     {
@@ -24,7 +32,7 @@ class SessionList extends Component
 
     addSession = () =>
     {
-        this.setState({ redirectPath: `/session-edit/0/${getUserId()}` });
+        this.setState({ redirectPath: `/session-edit/0/${this.state.userId}` });
     }
 
     render()
@@ -57,19 +65,19 @@ class SessionList extends Component
                                         <tbody>
                                             {this.state.sessions.map(s =>
                                                 <tr key={s.id}>
-                                                    <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}/${getUserId()}`}>{formatDate(s.date)}</Link></td>
+                                                    <td style={{ whiteSpace: 'nowrap' }}><Link to={`/sessions/${s.id}`}>{formatDate(s.date)}</Link></td>
                                                     <td style={{ whiteSpace: 'nowrap' }}>{s.locationName}</td>
                                                     <td>{s.partnerNames}</td>
                                                     <td>{s.comment}</td>
-                                                    <td><Link to={`/session-edit/${s.id}/${getUserId()}`}><img src={require('./assets/edit.png')} alt="Edit"/></Link></td>
-                                                    <td><Link to={`/session-delete/${s.id}/${getUserId()}`}><img src={require('./assets/delete.png')} alt="Delete"/></Link></td>
+                                                    <td><Link to={`/session-edit/${s.id}`}><img src={require('./assets/edit.png')} alt="Edit" /></Link></td>
+                                                    <td><Link to={`/session-delete/${s.id}`}><img src={require('./assets/delete.png')} alt="Delete" /></Link></td>
                                                 </tr >)}
                                         </tbody >
                                     </table >
                                 </>
                             )
                             :
-                        <WaitLoading />
+                            <WaitLoading />
                     }
                     <p><a href={this.state.urlApiRead}>API</a></p>
                 </div >

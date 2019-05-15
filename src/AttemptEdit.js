@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getApiUrl, formatDate } from "./Utils";
+import { getApiUrl, formatDate, getUserId } from "./Utils";
 import { Redirect } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
 
@@ -13,6 +13,8 @@ class AttemptEdit extends Component
         for (let p = 0; p <= 95; p += 5)
             percentages.push(p);
 
+        let userId = getUserId();
+
         this.state =
             {
                 attempt: null,
@@ -20,7 +22,8 @@ class AttemptEdit extends Component
                 routes: null,
                 hasLoadedAttempt: false,
                 hasLoadedSession: false,
-                urlApiReadSession: `${getApiUrl("session", "read")}?id=${this.props.match.params.sessionId}&userId=${this.props.match.params.userId}`,
+                userId: userId,
+                urlApiReadSession: `${getApiUrl("session", "read")}?id=${this.props.match.params.sessionId}&userId=${userId}`,
                 urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}`,
                 urlApiCreate: getApiUrl("attempt", "create"),
                 urlApiUpdate: getApiUrl("attempt", "update"),
@@ -39,7 +42,7 @@ class AttemptEdit extends Component
             attempt =
                 {
                     id: 0,
-                    userId: this.props.match.params.userId,
+                    userId: this.state.userId,
                     sessionId: this.props.match.params.sessionId,
                     routeId: 0,
                     comment: "",
@@ -159,7 +162,7 @@ class AttemptEdit extends Component
 
     goBack = () =>
     {
-        this.setState({ redirectPath: `/sessions/${this.props.match.params.sessionId}/${this.props.match.params.userId}` });
+        this.setState({ redirectPath: `/sessions/${this.props.match.params.sessionId}` });
     }
 
     render()
@@ -239,7 +242,7 @@ class AttemptEdit extends Component
                     </div >)
             }
             else
-                return <WaitLoading/>
+                return <WaitLoading />
         }
         else
             return <Redirect to={this.state.redirectPath} />;

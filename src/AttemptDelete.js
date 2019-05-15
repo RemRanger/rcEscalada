@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getApiUrl } from "./Utils";
+import { getApiUrl, getUserId } from "./Utils";
 import WaitLoading from "./WaitLoading";
 import { Redirect } from "react-router-dom";
 
@@ -12,7 +12,7 @@ class AttemptDelete extends Component
         this.state =
             {
                 attempt: null,
-                urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}&userId=${this.props.match.params.userId}`,
+                urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}&userId=${getUserId()}`,
                 urlApiDelete: `${getApiUrl("attempt", "delete")}?id=${this.props.match.params.id}`,
                 redirectPath: null
             }
@@ -68,7 +68,7 @@ class AttemptDelete extends Component
 
     goBack = () =>
     {
-        this.setState({ redirectPath: `/sessions/${this.props.match.params.sessionId}/${this.props.match.params.userId}` });
+        this.setState({ redirectPath: `/sessions/${this.props.match.params.sessionId}` });
     }
 
     render()
@@ -92,7 +92,7 @@ class AttemptDelete extends Component
                         </div >
                         )
                         :
-                        <WaitLoading/>
+                        <WaitLoading />
                     }
                 </div >)
         }

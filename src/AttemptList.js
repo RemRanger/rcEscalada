@@ -31,7 +31,7 @@ class AttemptList extends Component
 
     addAttempt = () =>
     {
-        this.setState({ redirectPath: `/attempt-edit/0/${this.props.sessionId}/${this.props.userId}` });
+        this.setState({ redirectPath: `/attempt-edit/0/${this.props.sessionId}` });
     }
 
     render()

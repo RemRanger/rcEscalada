@@ -89,11 +89,11 @@ class App extends Component
                     <Route path="/login" render={(props) => <Login onLoggedIn={this.handleLoggedIn} />} />
                     <Route path="/register" component={Register} />
                     <Route exact path="/sessions" component={SessionList} />
-                    <Route path="/sessions/:id/:userId" component={SessionDetail} />
-                    <Route path="/session-edit/:id/:userId" component={SessionEdit} />
-                    <Route path="/session-delete/:id/:userId" component={SessionDelete} />
-                    <Route path="/attempt-edit/:id/:sessionId/:userId" component={AttemptEdit} />
-                    <Route path="/attempt-delete/:id/:sessionId/:userId" component={AttemptDelete} />
+                    <Route path="/sessions/:id" component={SessionDetail} />
+                    <Route path="/session-edit/:id" component={SessionEdit} />
+                    <Route path="/session-delete/:id" component={SessionDelete} />
+                    <Route path="/attempt-edit/:id/:sessionId" component={AttemptEdit} />
+                    <Route path="/attempt-delete/:id/:sessionId" component={AttemptDelete} />
                     }
                 </div>
             </HashRouter>
