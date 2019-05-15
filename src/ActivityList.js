@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getResultPic } from "./Utils";
+import { getResultPic, getUserId } from "./Utils";
 import { getApiUrl, formatDate } from "./Utils";
 import { Link } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
@@ -36,7 +36,13 @@ class AttemptGroup
 
 class ActivityList extends Component
 {
-    state = { attempts: null, hasLoaded: false, urlApiRead: getApiUrl('attempt', "read") }
+    state =
+        {
+            attempts: null,
+            hasLoaded: false,
+            urlApiRead: getApiUrl('attempt', "read"),
+            userId: getUserId()
+        }
 
     getActivitysAsync = async () =>
     {
@@ -100,46 +106,47 @@ class ActivityList extends Component
                                                         </tr>
                                                         <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                                                             <td colSpan="100">
-                                                                Climber:&nbsp;<Link to={`/sessions/${g.sessionId}/${g.userId}`}>{g.attempts[0].userFirstName} {g.attempts[0].userLastName}</Link>
+                                                                Climber:&nbsp;
+                                                                {this.state.userId === g.userId ? <Link to={`/sessions/${g.sessionId}`}>{g.attempts[0].userFirstName} {g.attempts[0].userLastName}</Link> : g.attempts[0].userFirstName} {g.attempts[0].userLastName}
                                                             </td>
                                                         </tr>
-
-                                                        <tr>
-                                                            <th colSpan="2">Route</th>
-                                                            <th align="left">Type</th>
-                                                            <th align="left">Rating</th>
-                                                            <th align="left">Location</th>
-                                                            <th><img src={require('./assets/result-finish.png')} alt="" /></th>
-                                                        </tr>
-                                                        {g.attempts.map(a =>
-                                                            <tr key={a.id}>
-                                                                <td width="16" style={{ backgroundColor: a.routeColor }}></td>
-                                                                <td width="300" nowrap="true">{a.routeName}</td>
-                                                                <td width="100" nowrap="true">{a.routeType}</td>
-                                                                <td width="60" nowrap="true">{a.routeRating}</td>
-                                                                <td width="200" >{a.routeSublocation}</td>
-                                                                {
-                                                                    a.result === 0 && a.percentage !== 0
-                                                                        ?
-                                                                        <td width="40" nowrap="true" style={{ color: 'red' }}>{a.percentage || 0}%</td>
-                                                                        :
-                                                                        <td width="40" nowrap="true" align="center">{getResultPic(a.result) != null ? <img src={require('./assets/' + getResultPic(a.result))} alt="" /> : ""}</td>
-                                                                }
-                                                            </tr>)}
+               
+                                                            <tr>
+                                                                    <th colSpan="2">Route</th>
+                                                                    <th align="left">Type</th>
+                                                                    <th align="left">Rating</th>
+                                                                    <th align="left">Location</th>
+                                                                    <th><img src={require('./assets/result-finish.png')} alt="" /></th>
+                                                                </tr>
+                                                                {g.attempts.map(a =>
+                                                                    <tr key={a.id}>
+                                                                        <td width="16" style={{ backgroundColor: a.routeColor }}></td>
+                                                                        <td width="300" nowrap="true">{a.routeName}</td>
+                                                                        <td width="100" nowrap="true">{a.routeType}</td>
+                                                                        <td width="60" nowrap="true">{a.routeRating}</td>
+                                                                        <td width="200" >{a.routeSublocation}</td>
+                                                                        {
+                                                                            a.result === 0 && a.percentage !== 0
+                                                                                ?
+                                                                                <td width="40" nowrap="true" style={{ color: 'red' }}>{a.percentage || 0}%</td>
+                                                                                :
+                                                                                <td width="40" nowrap="true" align="center">{getResultPic(a.result) != null ? <img src={require('./assets/' + getResultPic(a.result))} alt="" /> : ""}</td>
+                                                                        }
+                                                                    </tr>)}
                                                     </tbody>
                                                 </table>
                                             </td>
                                         </tr>)}
                                 </tbody>
                             </table>
-                        )
-                        :
-                        <WaitLoading hasLoaded={this.state.hasLoaded} />
-                }
+                                    )
+                                :
+                                    <WaitLoading hasLoaded={this.state.hasLoaded} />
+                                    }
                 <p><a href={this.state.urlApiRead}>API</a></p>
             </div >
-        );
-    }
-}
-
+                                );
+                            }
+                        }
+                        
 export default ActivityList;

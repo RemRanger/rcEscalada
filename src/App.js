@@ -78,7 +78,7 @@ class App extends Component
                                     (
                                         <>
                                             <li><NavLink to={"/sessions"}>My sessions</NavLink></li>
-                                            <li><a href="/home" onClick={this.logout}>Logout {this.state.user.firstName}</a></li>
+                                            <li><a href="/" onClick={this.logout}>Logout {this.state.user.firstName}</a></li>
                                         </>
                                     )}
                         </ul>
