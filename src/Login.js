@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getApiUrl } from "./Utils";
+import { getApiUrl, getUserId } from "./Utils";
 import { Redirect, Link } from "react-router-dom";
 
 class Login extends Component
@@ -71,7 +71,7 @@ class Login extends Component
 
     render()
     {
-        if (this.state.user == null || this.state.user.id < 0)
+        if (!getUserId())
         {
             return (
                 <div style={{ textAlign: 'center' }}>
