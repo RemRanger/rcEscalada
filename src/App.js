@@ -48,8 +48,10 @@ class App extends Component
     logout = () =>
     {
         setUserId(null);
-        this.setState({ user: null });
+        this.setState({ userId: null, user: null });
     }
+
+    handleLoginExpired = () => this.setState({ userId: null, user: null });
 
     render()
     {
@@ -86,9 +88,9 @@ class App extends Component
                     <Route path="/locations/:id" component={LocationDetail} />
                     <Route path="/climbers" component={UserList} />
                     <Route path="/about" component={About} />
-                    <Route path="/login" render={(props) => <Login onLoggedIn={this.handleLoggedIn} />} />
+                    <Route path="/login" render={() => <Login onLoggedIn={this.handleLoggedIn} />} />
                     <Route path="/register" component={Register} />
-                    <Route exact path="/sessions" component={SessionList} />
+                    <Route exact path="/sessions" render={() => <SessionList onLoginExpired={this.handleLoginExpired} />} />
                     <Route path="/sessions/:id" component={SessionDetail} />
                     <Route path="/session-edit/:id" component={SessionEdit} />
                     <Route path="/session-delete/:id" component={SessionDelete} />

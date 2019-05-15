@@ -9,12 +9,14 @@ class SessionDelete extends Component
     {
         super(props);
 
+        let userId = getUserId();
+
         this.state =
             {
                 session: null,
-                urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.match.params.id}&userId=${getUserId()}`,
+                urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.match.params.id}&userId=${userId}`,
                 urlApiDelete: `${getApiUrl("session", "delete")}?id=${this.props.match.params.id}`,
-                redirectPath: null
+                redirectPath: userId ? null : "/home"
             }
 
         this.handleSubmit = this.handleSubmit.bind(this);

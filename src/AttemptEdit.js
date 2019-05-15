@@ -27,8 +27,8 @@ class AttemptEdit extends Component
                 urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}`,
                 urlApiCreate: getApiUrl("attempt", "create"),
                 urlApiUpdate: getApiUrl("attempt", "update"),
-                redirectPath: null,
-                percentages: percentages
+                percentages: percentages,
+                redirectPath: userId ? null : "/home"
             }
 
         this.handleChange = this.handleChange.bind(this);
@@ -73,20 +73,22 @@ class AttemptEdit extends Component
 
         if (session)
         {
-            this.getRoutesAsync(`${getApiUrl("route", "read")}?locationId=${session.locationId}`);
+            this.getRoutesAsync(`${getApiUrl("route", "read")}?locationId=${session.locationId}`, session);
             this.setState({ session: session, hasLoadedSession: true });
         }
 
         return session;
     }
 
-    getRoutesAsync = async (apiUrl) =>
+    getRoutesAsync = async (apiUrl, session) =>
     {
         let response = await fetch(apiUrl, { method: 'get' });
         let routes = null;
         try
         {
             routes = await response.json();
+            if (routes)
+                routes = routes.filter(r => r.dateFrom <= session.date && (r.dateUntil == null || r.dateUntil >= session.date));
         }
         finally
         {
@@ -192,7 +194,7 @@ class AttemptEdit extends Component
                                             <div style={{ border: 'outset', borderWidth: '1px', height: '400px', overflowY: 'auto' }}>
                                                 <table>
                                                     <tbody>
-                                                        {this.state.routes.filter(r => r.dateUntil == null || this.state.attempt.id > 0).map(r =>
+                                                        {this.state.routes.map(r =>
                                                             <tr key={r.id} style={{
                                                                 color: parseInt(r.id) === parseInt(this.state.attempt.routeId) ? 'white' : '',
                                                                 backgroundColor: parseInt(r.id) === parseInt(this.state.attempt.routeId) ? 'black' : '',

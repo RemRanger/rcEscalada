@@ -9,12 +9,14 @@ class AttemptDelete extends Component
     {
         super(props);
 
+        let userId = getUserId();
+
         this.state =
             {
                 attempt: null,
-                urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}&userId=${getUserId()}`,
+                urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}&userId=${userId}`,
                 urlApiDelete: `${getApiUrl("attempt", "delete")}?id=${this.props.match.params.id}`,
-                redirectPath: null
+                redirectPath: userId ? null : "/home"
             }
 
         this.handleSubmit = this.handleSubmit.bind(this);

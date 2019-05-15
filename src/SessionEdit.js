@@ -24,7 +24,7 @@ class SessionEdit extends Component
                 urlApiReadUsers: getApiUrl("user", "read"),
                 urlApiCreate: getApiUrl("session", "create"),
                 urlApiUpdate: getApiUrl("session", "update"),
-                redirectPath: null
+                redirectPath: userId ? null : "/home"
             }
 
         this.handleDateChange = this.handleDateChange.bind(this);

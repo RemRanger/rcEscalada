@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 import AttemptList from "./AttemptList";
 import { getApiUrl, formatDate, getUserId } from "./Utils";
 import WaitLoading from "./WaitLoading";
@@ -18,7 +19,8 @@ class SessionDetail extends Component
                 hasLoadedUser: false,
                 userId: userId,
                 urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.match.params.id}&userId=${userId}`,
-                urlApiReadUser: `${getApiUrl('user', "read")}`
+                urlApiReadUser: `${getApiUrl('user', "read")}`,
+                redirectPath: userId ? null : "/home"
             }
     }
 
@@ -51,42 +53,47 @@ class SessionDetail extends Component
         if (!this.state.hasLoadedUser && this.state.user == null)
             this.getUserAsync();
 
-        return (
-            <div align="center">
-                <h1>Session {this.state.session ? ": " + formatDate(this.state.session.date) : ""}</h1>
-                {
-                    this.state.session && this.state.user
-                        ?
-                        (
-                            <div>
-                                {this.state.session.comment}
-                                < br /> <br />
-                                <table >
-                                    <tbody>
-                                        <tr >
-                                            <td >Climber:</td>
-                                            <td >{this.state.user.firstName} {this.state.user.lastName}</td>
-                                        </tr>
-                                        <tr >
-                                            <td >With:</td>
-                                            <td >{this.state.session.partnerNames}</td>
-                                        </tr>
-                                        <tr >
-                                            <td >At:</td>
-                                            <td >{this.state.session.locationName}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br />
-                                <p>{this.state.session.name}</p>
-                                <AttemptList sessionId={this.props.match.params.id} userId={this.state.userId} />
-                            </div>
-                        )
-                        :
-                        <WaitLoading hasLoaded={this.state.hasLoadedSession && this.state.hasLoadedUser} />
-                }
-            </div >
-        );
+        if (this.state.redirectPath == null)
+        {
+            return (
+                <div align="center">
+                    <h1>Session {this.state.session ? ": " + formatDate(this.state.session.date) : ""}</h1>
+                    {
+                        this.state.session && this.state.user
+                            ?
+                            (
+                                <div>
+                                    {this.state.session.comment}
+                                    < br /> <br />
+                                    <table >
+                                        <tbody>
+                                            <tr >
+                                                <td >Climber:</td>
+                                                <td >{this.state.user.firstName} {this.state.user.lastName}</td>
+                                            </tr>
+                                            <tr >
+                                                <td >With:</td>
+                                                <td >{this.state.session.partnerNames}</td>
+                                            </tr>
+                                            <tr >
+                                                <td >At:</td>
+                                                <td >{this.state.session.locationName}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <p>{this.state.session.name}</p>
+                                    <AttemptList sessionId={this.props.match.params.id} userId={this.state.userId} />
+                                </div>
+                            )
+                            :
+                            <WaitLoading hasLoaded={this.state.hasLoadedSession && this.state.hasLoadedUser} />
+                    }
+                </div >
+            );
+        }
+        else
+            return <Redirect to={this.state.redirectPath} />
     }
 }
 

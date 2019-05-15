@@ -18,6 +18,9 @@ class SessionList extends Component
                 urlApiRead: `${getApiUrl('session', "read")}?userId=${userId}`,
                 redirectPath: userId ? null : "/home"
             }
+
+        if (!userId)
+            this.props.onLoginExpired();
     }
 
     getSessionsAsync = async () =>
