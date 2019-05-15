@@ -30,9 +30,6 @@ class AttemptEdit extends Component
                 percentages: percentages,
                 redirectPath: userId ? null : "/home"
             }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     getAttemptAsync = async () =>
@@ -60,7 +57,7 @@ class AttemptEdit extends Component
             attempt = attempts[0];
         }
 
-        this.setState({ attempt: attempt, hasLoadedAttempt: true });
+        this.setState({ attempt, hasLoadedAttempt: true });
 
         return attempt;
     }
@@ -74,7 +71,7 @@ class AttemptEdit extends Component
         if (session)
         {
             this.getRoutesAsync(`${getApiUrl("route", "read")}?locationId=${session.locationId}`, session);
-            this.setState({ session: session, hasLoadedSession: true });
+            this.setState({ session, hasLoadedSession: true });
         }
 
         return session;
@@ -92,12 +89,12 @@ class AttemptEdit extends Component
         }
         finally
         {
-            this.setState({ routes: routes });
+            this.setState({ routes });
         }
         return routes;
     }
 
-    handleChange(event)
+    handleChange = (event) =>
     {
         if (this.state.attempt !== null)
         {
@@ -105,7 +102,7 @@ class AttemptEdit extends Component
             let name = event.target.name;
             let value = event.target.value;
             attempt[name] = value;
-            this.setState({ attempt: attempt });
+            this.setState({ attempt });
         }
     }
 
@@ -114,7 +111,7 @@ class AttemptEdit extends Component
         return this.state.attempt != null && this.state.attempt.userId > 0 && this.state.attempt.sessionId > 0 && this.state.attempt.routeId > 0;
     }
 
-    handleSubmit(event)
+    handleSubmit = (event) =>
     {
         event.preventDefault();
 

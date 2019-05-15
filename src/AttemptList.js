@@ -17,16 +17,16 @@ class AttemptList extends Component
     getAttemptsAsync = async () =>
     {
         let response = await fetch(this.state.urlApiRead);
-        let data = null;
+        let attempts = null;
         try
         {
-            data = await response.json();
+            attempts = await response.json();
         }
         finally
         {
-            this.setState({ attempts: data, hasLoaded: true });
+            this.setState({ attempts, hasLoaded: true });
         }
-        return data;
+        return attempts;
     }
 
     addAttempt = () =>

@@ -18,8 +18,6 @@ class AttemptDelete extends Component
                 urlApiDelete: `${getApiUrl("attempt", "delete")}?id=${this.props.match.params.id}`,
                 redirectPath: userId ? null : "/home"
             }
-
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     getAttemptAsync = async () =>
@@ -28,7 +26,7 @@ class AttemptDelete extends Component
         let attempts = await response.json();
 
         let attempt = attempts[0];
-        this.setState({ attempt: attempt, hasLoadedAttempt: true });
+        this.setState({ attempt, hasLoadedAttempt: true });
 
         return attempt;
     }
@@ -38,7 +36,7 @@ class AttemptDelete extends Component
         return this.state.attempt != null;
     }
 
-    handleSubmit(event)
+    handleSubmit = (event) =>
     {
         event.preventDefault();
 

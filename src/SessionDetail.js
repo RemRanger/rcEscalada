@@ -27,11 +27,12 @@ class SessionDetail extends Component
     getSessionAsync = async () =>
     {
         let response = await fetch(this.state.urlApiRead);
-        let data = await response.json();
+        let sessions = await response.json();
 
-        this.setState({ session: data[0], hasLoadedSession: true });
+        let session = sessions[0];
+        this.setState({ session: session, hasLoadedSession: true });
 
-        return data;
+        return session;
     }
 
     getUserAsync = async () =>

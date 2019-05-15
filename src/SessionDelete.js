@@ -18,8 +18,6 @@ class SessionDelete extends Component
                 urlApiDelete: `${getApiUrl("session", "delete")}?id=${this.props.match.params.id}`,
                 redirectPath: userId ? null : "/home"
             }
-
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     getSessionAsync = async () =>
@@ -28,7 +26,7 @@ class SessionDelete extends Component
         let sessions = await response.json();
 
         let session = sessions[0];
-        this.setState({ session: session, hasLoadedSession: true });
+        this.setState({ session, hasLoadedSession: true });
 
         return session;
     }
@@ -38,7 +36,7 @@ class SessionDelete extends Component
         return this.state.session != null;
     }
 
-    handleSubmit(event)
+    handleSubmit = (event) =>
     {
         event.preventDefault();
 

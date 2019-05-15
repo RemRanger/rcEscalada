@@ -15,8 +15,6 @@ class DatePicker extends Component
                 selectedMonth: date.getMonth() + 1,
                 selectedDay: date.getDate()
             }
-
-        this.handleChange = this.handleChange.bind(this);
     }
 
     getYears = () =>
@@ -51,7 +49,7 @@ class DatePicker extends Component
         return days;
     }
 
-    handleChange(event)
+    handleChange = (event) =>
     {
         let name = event.target.name;
         let value = event.target.value;

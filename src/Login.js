@@ -16,9 +16,6 @@ class Login extends Component
                 urlApiLoginRead: getApiUrl('user-login', 'read'),
                 user: null
             }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     isValid()
@@ -31,14 +28,14 @@ class Login extends Component
         return this.state.touched;
     }
 
-    handleChange(event)
+    handleChange = (event) =>
     {
         let name = event.target.name;
         let value = event.target.value;
         this.setState({ [name]: value, touched: true });
     }
 
-    handleSubmit(event)
+    handleSubmit = (event) =>
     {
         event.preventDefault();
 
@@ -56,17 +53,17 @@ class Login extends Component
                 method: 'post',
                 body: formData
             });
-        let data = null;
+        let user = null;
         try
         {
-            data = await response.json();
+            user = await response.json();
         }
         finally
         {
-            this.setState({ user: data });
-            this.props.onLoggedIn(data);
+            this.setState({ user });
+            this.props.onLoggedIn(user);
         }
-        return data;
+        return user;
     }
 
     render()

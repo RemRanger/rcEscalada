@@ -21,9 +21,6 @@ class Register extends Component
                 submitted: false,
                 urlApiCreate: getApiUrl("user", "create"),
             }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     isValid()
@@ -37,14 +34,14 @@ class Register extends Component
         return this.state.touched;
     }
 
-    handleChange(event)
+    handleChange = (event) =>
     {
         let name = event.target.name;
         let value = event.target.value;
         this.setState({ [name]: value, touched: true });
     }
 
-    handleSubmit(event)
+    handleSubmit = (event) =>
     {
         event.preventDefault();
 

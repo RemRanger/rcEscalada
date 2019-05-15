@@ -34,8 +34,10 @@ class App extends Component
         let users = await response.json();
 
         let user = users.filter(d => parseInt(d.id) === parseInt(userId))[0];
-
-        this.setState({ user: user });
+        if (user)
+            this.setState({ user: user });
+        else
+            this.logout();
     }
 
     handleLoggedIn = (user) =>

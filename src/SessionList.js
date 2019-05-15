@@ -26,11 +26,11 @@ class SessionList extends Component
     getSessionsAsync = async () =>
     {
         let response = await fetch(this.state.urlApiRead);
-        let data = await response.json();
+        let sessions = await response.json();
 
-        this.setState({ sessions: data });
+        this.setState({ sessions });
 
-        return data;
+        return sessions;
     }
 
     addSession = () =>

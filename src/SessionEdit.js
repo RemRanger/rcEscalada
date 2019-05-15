@@ -26,12 +26,6 @@ class SessionEdit extends Component
                 urlApiUpdate: getApiUrl("session", "update"),
                 redirectPath: userId ? null : "/home"
             }
-
-        this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handlePartnersChange = this.handlePartnersChange.bind(this);
-
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     getSessionAsync = async () =>
@@ -55,7 +49,7 @@ class SessionEdit extends Component
             session.partnerIds = session.partnerIdsAsString != null ? session.partnerIdsAsString.toString().split(",").map(i => i.trim()) : "";
         }
 
-        this.setState({ session: session, hasLoadedSession: true });
+        this.setState({ session, hasLoadedSession: true });
 
         return session;
     }
@@ -65,7 +59,7 @@ class SessionEdit extends Component
         let response = await fetch(this.state.urlApiReadLocations);
         let locations = await response.json();
 
-        this.setState({ locations: locations });
+        this.setState({ locations });
 
         return locations;
     }
@@ -73,25 +67,25 @@ class SessionEdit extends Component
     getUsersAsync = async () =>
     {
         let response = await fetch(this.state.urlApiReadUsers);
-        let data = await response.json();
+        let users = await response.json();
 
-        this.setState({ users: data });
+        this.setState({ users });
 
-        return data;
+        return users;
     }
 
-    handleDateChange(newDate)
+    handleDateChange = (newDate) =>
     {
         if (this.state.session != null)
         {
             let session = this.state.session;
             session.date = newDate;
-            this.setState({ session: session });
+            this.setState({ session });
         }
 
     }
 
-    handleChange(event)
+    handleChange = (event) =>
     {
         let session = this.state.session;
         let name = event.target.name;
@@ -101,7 +95,7 @@ class SessionEdit extends Component
 
     }
 
-    handlePartnersChange(event)
+    handlePartnersChange = (event) =>
     {
         if (this.state.session)
         {
@@ -125,7 +119,7 @@ class SessionEdit extends Component
         return this.state.session != null && this.state.session.locationId > 0;
     }
 
-    handleSubmit(event)
+    handleSubmit = (event) =>
     {
         event.preventDefault();
 
