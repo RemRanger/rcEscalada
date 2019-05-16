@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
-import { getApiUrl, formatDate, getUserId } from "./Utils";
+import { getApiUrl, formatDate } from "./Utils";
 import WaitLoading from "./WaitLoading";
 
 class SessionList extends Component
@@ -9,18 +9,13 @@ class SessionList extends Component
     {
         super(props);
 
-        let userId = getUserId();
-
         this.state =
             {
                 sessions: null,
-                userId: userId,
-                urlApiRead: `${getApiUrl('session', "read")}?userId=${userId}`,
-                redirectPath: userId ? null : "/home"
+                urlApiRead: `${getApiUrl('session', "read")}?userId=${this.props.userId}`,
+                redirectPath: this.props.userId ? null : "/home"
             }
 
-        if (!userId)
-            this.props.onLoginExpired();
     }
 
     getSessionsAsync = async () =>
@@ -35,7 +30,7 @@ class SessionList extends Component
 
     addSession = () =>
     {
-        this.setState({ redirectPath: `/session-edit/0/${this.state.userId}` });
+        this.setState({ redirectPath: `/session-edit/0/${this.props.userId}` });
     }
 
     render()

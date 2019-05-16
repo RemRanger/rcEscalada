@@ -44,7 +44,7 @@ class App extends Component
     {
         let userId = user ? user.id : null;
         setUserId(userId);
-        this.setState({ user: user });
+        this.setState({ userId, user});
     }
 
     logout = () =>
@@ -52,8 +52,6 @@ class App extends Component
         setUserId(null);
         this.setState({ userId: null, user: null });
     }
-
-    handleLoginExpired = () => this.setState({ userId: null, user: null });
 
     render()
     {
@@ -85,20 +83,19 @@ class App extends Component
                     </div>
 
                     <Route exact path="/" render={() => (<Redirect to="/home" />)} />
-                    <Route path="/home" component={Home} />
+                    <Route path="/home" render={() => <Home userId={this.state.userId} />} />
                     <Route exact path="/locations" component={LocationList} />
                     <Route path="/locations/:id" component={LocationDetail} />
                     <Route path="/climbers" component={UserList} />
                     <Route path="/about" component={About} />
                     <Route path="/login" render={() => <Login onLoggedIn={this.handleLoggedIn} />} />
                     <Route path="/register" component={Register} />
-                    <Route exact path="/sessions" render={() => <SessionList onLoginExpired={this.handleLoginExpired} />} />
-                    <Route path="/sessions/:id" component={SessionDetail} />
-                    <Route path="/session-edit/:id" component={SessionEdit} />
-                    <Route path="/session-delete/:id" component={SessionDelete} />
-                    <Route path="/attempt-edit/:id/:sessionId" component={AttemptEdit} />
-                    <Route path="/attempt-delete/:id/:sessionId" component={AttemptDelete} />
-                    }
+                    <Route exact path="/sessions" render={() => <SessionList userId={this.state.userId} />} />
+                    <Route path="/sessions/:id" render={(props) => <SessionDetail id={props.match.params.id} userId={this.state.userId} />} />
+                    <Route path="/session-edit/:id" render={(props) => <SessionEdit id={props.match.params.id} userId={this.state.userId} />} />
+                    <Route path="/session-delete/:id" render={(props) => <SessionDelete id={props.match.params.id} userId={this.state.userId} />} />
+                    <Route path="/attempt-edit/:id/:sessionId" render={(props) => <AttemptEdit id={props.match.params.id} sessionId={props.match.params.sessionId} userId={this.state.userId} />} />
+                    <Route path="/attempt-delete/:id/:sessionId" render={(props) => <AttemptDelete id={props.match.params.id} sessionId={props.match.params.sessionId} userId={this.state.userId} />} />
                 </div>
             </HashRouter>
         );

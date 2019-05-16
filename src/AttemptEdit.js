@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getApiUrl, formatDate, getUserId } from "./Utils";
+import { getApiUrl, formatDate } from "./Utils";
 import { Redirect } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
 
@@ -13,8 +13,6 @@ class AttemptEdit extends Component
         for (let p = 0; p <= 95; p += 5)
             percentages.push(p);
 
-        let userId = getUserId();
-
         this.state =
             {
                 attempt: null,
@@ -22,25 +20,24 @@ class AttemptEdit extends Component
                 routes: null,
                 hasLoadedAttempt: false,
                 hasLoadedSession: false,
-                userId: userId,
-                urlApiReadSession: `${getApiUrl("session", "read")}?id=${this.props.match.params.sessionId}&userId=${userId}`,
-                urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.match.params.id}`,
+                urlApiReadSession: `${getApiUrl("session", "read")}?id=${this.props.sessionId}&userId=${this.props.userId}`,
+                urlApiRead: `${getApiUrl("attempt", "read")}?id=${this.props.id}`,
                 urlApiCreate: getApiUrl("attempt", "create"),
                 urlApiUpdate: getApiUrl("attempt", "update"),
                 percentages: percentages,
-                redirectPath: userId ? null : "/home"
+                redirectPath: this.props.userId ? null : "/home"
             }
     }
 
     getAttemptAsync = async () =>
     {
         let attempt = null;
-        if (parseInt(this.props.match.params.id) === 0)
+        if (parseInt(this.props.id) === 0)
             attempt =
                 {
                     id: 0,
-                    userId: this.state.userId,
-                    sessionId: this.props.match.params.sessionId,
+                    userId: this.props.userId,
+                    sessionId: this.props.sessionId,
                     routeId: 0,
                     comment: "",
                     result: 0,
@@ -124,7 +121,7 @@ class AttemptEdit extends Component
         if (this.state.attempt.id > 0)
             formData.append('id', this.state.attempt.id);
         formData.append('userId', this.state.attempt.userId);
-        formData.append('sessionId', this.props.match.params.sessionId);
+        formData.append('sessionId', this.props.sessionId);
         formData.append('routeId', this.state.attempt.routeId);
         formData.append('comment', this.state.attempt.comment);
         formData.append('result', this.state.attempt.result);
@@ -161,7 +158,7 @@ class AttemptEdit extends Component
 
     goBack = () =>
     {
-        this.setState({ redirectPath: `/sessions/${this.props.match.params.sessionId}` });
+        this.setState({ redirectPath: `/sessions/${this.props.sessionId}` });
     }
 
     render()

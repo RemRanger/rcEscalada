@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getApiUrl, getUserId } from "./Utils";
+import { getApiUrl } from "./Utils";
 import WaitLoading from "./WaitLoading";
 import { Redirect } from "react-router-dom";
 
@@ -9,14 +9,12 @@ class SessionDelete extends Component
     {
         super(props);
 
-        let userId = getUserId();
-
         this.state =
             {
                 session: null,
-                urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.match.params.id}&userId=${userId}`,
-                urlApiDelete: `${getApiUrl("session", "delete")}?id=${this.props.match.params.id}`,
-                redirectPath: userId ? null : "/home"
+            urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.id}&userId=${this.props.userId}`,
+                urlApiDelete: `${getApiUrl("session", "delete")}?id=${this.props.id}`,
+                redirectPath: this.props.userId ? null : "/home"
             }
     }
 

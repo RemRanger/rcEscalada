@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getApiUrl, getUserId } from "./Utils";
+import { getApiUrl } from "./Utils";
 import DatePicker from "./DatePicker";
 import { Redirect } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
@@ -10,28 +10,25 @@ class SessionEdit extends Component
     {
         super(props);
 
-        let userId = getUserId();
-
         this.state =
             {
                 session: null,
                 locations: null,
                 users: null,
                 hasLoadedSession: false,
-                userId: userId,
-                urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.match.params.id}&userId=${userId}`,
+                urlApiRead: `${getApiUrl("session", "read")}?id=${this.props.id}&userId=${this.props.userId}`,
                 urlApiReadLocations: getApiUrl("location", "read"),
                 urlApiReadUsers: getApiUrl("user", "read"),
                 urlApiCreate: getApiUrl("session", "create"),
                 urlApiUpdate: getApiUrl("session", "update"),
-                redirectPath: userId ? null : "/home"
+                redirectPath: this.props.userId ? null : "/home"
             }
     }
 
     getSessionAsync = async () =>
     {
         let session = null;
-        if (parseInt(this.props.match.params.id) === 0)
+        if (parseInt(this.props.id) === 0)
             session =
                 {
                     id: 0,
@@ -134,7 +131,7 @@ class SessionEdit extends Component
         formData.append('locationId', this.state.session.locationId);
         formData.append('date', this.state.session.date);
         formData.append('comment', this.state.session.comment);
-        formData.append('userId', this.state.userId);
+        formData.append('userId', this.props.userId);
         for (let i = 0; i < this.state.session.partnerIds.length; i++)
             formData.append('partnerIds[' + i + ']', this.state.session.partnerIds[i]);
 
@@ -211,7 +208,7 @@ class SessionEdit extends Component
                                         <td align="center">
                                             <select name="partnerIds" multiple size='30' onChange={this.handlePartnersChange}>
                                                 <option disabled>--Were you with others? If so, please select--</option>
-                                                {this.state.users.filter(u => parseInt(u.id) !== parseInt(this.state.userId)).map(u =>
+                                                {this.state.users.filter(u => parseInt(u.id) !== parseInt(this.props.userId)).map(u =>
                                                     <option key={u.id} value={u.id} selected={this.state.session != null && this.state.session.partnerIds.includes(u.id.toString())}>{u.firstName} {u.lastName}</option>)
                                                 }
                                             </select>

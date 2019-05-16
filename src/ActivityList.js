@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getResultPic, getUserId } from "./Utils";
+import { getResultPic } from "./Utils";
 import { getApiUrl, formatDate } from "./Utils";
 import { Link } from "react-router-dom";
 import WaitLoading from "./WaitLoading";
@@ -40,8 +40,7 @@ class ActivityList extends Component
         {
             attempts: null,
             hasLoaded: false,
-            urlApiRead: getApiUrl('attempt', "read"),
-            userId: getUserId()
+            urlApiRead: getApiUrl('attempt', "read")
         }
 
     getActivitysAsync = async () =>
@@ -107,7 +106,7 @@ class ActivityList extends Component
                                                         <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                                                             <td colSpan="100">
                                                                 Climber:&nbsp;
-                                                                {this.state.userId === g.userId ? <Link to={`/sessions/${g.sessionId}`}>{g.attempts[0].userFirstName} {g.attempts[0].userLastName}</Link> : g.attempts[0].userFirstName} {g.attempts[0].userLastName}
+                                                                {this.props.userId === g.userId ? <Link to={`/sessions/${g.sessionId}`}>{g.attempts[0].userFirstName} {g.attempts[0].userLastName}</Link> : g.attempts[0].userFirstName} {g.attempts[0].userLastName}
                                                             </td>
                                                         </tr>
                

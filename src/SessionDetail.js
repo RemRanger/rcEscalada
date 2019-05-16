@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import AttemptList from "./AttemptList";
-import { getApiUrl, formatDate, getUserId } from "./Utils";
+import { getApiUrl, formatDate } from "./Utils";
 import WaitLoading from "./WaitLoading";
 
 class SessionDetail extends Component
@@ -10,17 +10,14 @@ class SessionDetail extends Component
     {
         super(props);
 
-        let userId = getUserId();
-
         this.state =
             {
                 session: null,
                 hasLoadedSession: false,
                 hasLoadedUser: false,
-                userId: userId,
-                urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.match.params.id}&userId=${userId}`,
+                urlApiRead: `${getApiUrl('session', "read")}?id=${this.props.id}&userId=${this.props.userId}`,
                 urlApiReadUser: `${getApiUrl('user', "read")}`,
-                redirectPath: userId ? null : "/home"
+                redirectPath: this.props.userId ? null : "/home"
             }
     }
 
@@ -40,7 +37,7 @@ class SessionDetail extends Component
         let response = await fetch(this.state.urlApiReadUser);
         let users = await response.json();
 
-        let user = users.filter(d => parseInt(d.id) === parseInt(this.state.userId))[0];
+        let user = users.filter(d => parseInt(d.id) === parseInt(this.props.userId))[0];
 
         this.setState({ user: user, hasLoadedUser: true });
 
@@ -84,7 +81,7 @@ class SessionDetail extends Component
                                     </table>
                                     <br />
                                     <p>{this.state.session.name}</p>
-                                    <AttemptList sessionId={this.props.match.params.id} userId={this.state.userId} />
+                                    <AttemptList sessionId={this.props.id} userId={this.props.userId} />
                                 </div>
                             )
                             :
