@@ -75,8 +75,9 @@ class App extends Component
                                     :
                                     (
                                         <>
+                                            <li style={{ color: 'skyblue', fontWeight: '600' }}>&nbsp;&nbsp;Welcome {this.state.user.firstName}&nbsp;&nbsp;</li>
                                             <li><NavLink to={"/sessions"}>My sessions</NavLink></li>
-                                            <li><a href="" onClick={this.logout}>Logout {this.state.user.firstName}</a></li>
+                                            <li><a href="" onClick={this.logout}>Logout</a></li>
                                         </>
                                     )}
                         </ul>
