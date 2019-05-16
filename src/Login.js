@@ -61,7 +61,8 @@ class Login extends Component
         finally
         {
             this.setState({ user });
-            this.props.onLoggedIn(user);
+            if (user && user.id > 0)
+                this.props.onLoggedIn(user);
         }
         return user;
     }
