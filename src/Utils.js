@@ -1,7 +1,7 @@
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
-const loginExpiry = 5;//15 * 60; // 15 minutes; 15* 60 secs
+const loginExpiry = 15 * 60; // 15 minutes; 15* 60 secs
 
 export function getResultPic(result)
 {
