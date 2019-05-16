@@ -39,5 +39,5 @@ export function setUserId(userId)
     if (userId)
         cookies.set("userId", userId, { path: "/", maxAge: loginExpiry });
     else
-        cookies.remove("userId");
+        cookies.remove("userId", { path: "/" });
 }
